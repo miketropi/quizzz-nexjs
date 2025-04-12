@@ -1,0 +1,66 @@
+{
+  "app": {
+    "title": "Quizzz Gen AI",
+    "description": "Ứng dụng trắc nghiệm tối ưu"
+  },
+  "hero": {
+    "title": "Tạo Bài Kiểm Tra Trong Vài Giây",
+    "subtitle": "✨ Tận dụng sức mạnh của AI để tạo nội dung bài kiểm tra tương tác từ những yêu cầu đơn giản. 🚀 Hoàn hảo cho giáo viên 👩‍🏫, người sáng tạo nội dung 🎨 và những tâm hồn tò mò 🧠💭.",
+    "cta": "Bắt Đầu Ngay",
+    "placeholder": "Nhập chủ đề cho bài trắc nghiệm của bạn (ví dụ: 'Hệ Mặt Trời', 'Chiến Tranh Thế Giới Thứ II')"
+  },
+  "features": {
+    "title": "Tính Năng",
+    "items": {
+      "1": {
+        "title": "Nhiều Danh Mục",
+        "description": "Khám phá các bài trắc nghiệm về nhiều chủ đề khác nhau"
+      },
+      "2": {
+        "title": "Kết Quả Thời Gian Thực",
+        "description": "Nhận phản hồi ngay lập tức về câu trả lời của bạn"
+      },
+      "3": {
+        "title": "Thách Đấu Bạn Bè",
+        "description": "Thi đấu với bạn bè và theo dõi tiến trình của bạn"
+      }
+    }
+  },
+  "quiz": {
+    "title": "Trắc Nghiệm",
+    "loading": "Bài trắc nghiệm của bạn đang được tải...",
+    "back": "Trở Về Trang Chủ",
+    "error": "Đã xảy ra lỗi khi tải bài trắc nghiệm",
+    "questions": "Câu Hỏi",
+    "answers": "Câu Trả Lời",
+    "correct": "Đúng",
+    "incorrect": "Sai",
+    "results": "Kết Quả",
+    "total": "Tổng Số",
+    "correctAnswers": "Câu Trả Lời Đúng",
+    "incorrectAnswers": "Câu Trả Lời Sai",
+    "percentage": "Phần Trăm",
+    "share": "Chia Sẻ",
+    "shareMessage": "Xem kết quả của bạn trong trắc nghiệm này: {url}",
+    "shareTitle": "Kết Quả Trắc Nghiệm Của Tôi",
+    "previous": "Trang Trước",
+    "next": "Trang Tiếp Theo",
+    "finish": "Kết Thúc",
+    "submit": "Gửi",
+    "review": "Đánh Giá",
+    "reviewTitle": "Đánh Giá Trắc Nghiệm",
+    "showExplanation": "Hiển Thị Giải Thích"
+    
+  },
+  "nav": {
+    "home": "Trang Chủ",
+    "about": "Giới Thiệu",
+    "quizzes": "Trắc Nghiệm",
+    "profile": "Hồ Sơ"
+  },
+  "footer": {
+    "terms": "Điều Khoản",
+    "privacy": "Quyền Riêng Tư",
+    "contact": "Liên Hệ"
+  }
+} 

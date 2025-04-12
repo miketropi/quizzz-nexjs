@@ -1,0 +1,45 @@
+{
+  "app": {
+    "title": "Quizzz Gen AI",
+    "description": "The ultimate quiz application"
+  },
+  "hero": {
+    "title": "Create a Test in Seconds",
+    "subtitle": "Leverage the power of AI to create interactive quizzes from simple requests. Perfect for teachers, content creators, and curious minds.",
+    "cta": "Start Now",
+    "placeholder": "Enter a topic for your quiz (e.g., 'Solar System', 'World War II')"
+  },
+  "features": {
+    "title": "Features",
+    "items": {
+      "1": {
+        "title": "Diverse Categories",
+        "description": "Explore quizzes across various topics"
+      },
+      "2": {
+        "title": "Real-time Results",
+        "description": "Get instant feedback on your answers"
+      },
+      "3": {
+        "title": "Challenge Friends",
+        "description": "Compete with your friends and track your progress"
+      }
+    }
+  },
+  "quiz": {
+    "title": "Quiz",
+    "loading": "Your quiz is loading...",
+    "back": "Back to Home"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "quizzes": "Quizzes",
+    "profile": "Profile"
+  },
+  "footer": {
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "contact": "Contact"
+  }
+} 

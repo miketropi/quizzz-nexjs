@@ -1,0 +1,39 @@
+{
+  "app": {
+    "title": "Quizzz",
+    "description": "L'application de quiz ultime"
+  },
+  "hero": {
+    "title": "Défiez-vous",
+    "subtitle": "Testez vos connaissances avec nos quiz interactifs",
+    "cta": "Commencer"
+  },
+  "features": {
+    "title": "Fonctionnalités",
+    "items": {
+      "1": {
+        "title": "Catégories Diverses",
+        "description": "Explorez des quiz sur divers sujets"
+      },
+      "2": {
+        "title": "Résultats en Temps Réel",
+        "description": "Obtenez des retours instantanés sur vos réponses"
+      },
+      "3": {
+        "title": "Défiez vos Amis",
+        "description": "Faites des compétitions avec vos amis et suivez votre progression"
+      }
+    }
+  },
+  "quiz": {
+    "title": "Quiz",
+    "loading": "Votre quiz est en cours de chargement...",
+    "back": "Retour à l'accueil"
+  },
+  "nav": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "quizzes": "Quiz",
+    "profile": "Profil"
+  }
+} 

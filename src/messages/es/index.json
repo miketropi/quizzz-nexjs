@@ -1,0 +1,39 @@
+{
+  "app": {
+    "title": "Quizzz",
+    "description": "La última aplicación de cuestionarios"
+  },
+  "hero": {
+    "title": "Desafíate a ti mismo",
+    "subtitle": "Pon a prueba tus conocimientos con nuestros cuestionarios interactivos",
+    "cta": "Comenzar ahora"
+  },
+  "features": {
+    "title": "Características",
+    "items": {
+      "1": {
+        "title": "Categorías Diversas",
+        "description": "Explora cuestionarios de diversos temas"
+      },
+      "2": {
+        "title": "Resultados en Tiempo Real",
+        "description": "Obtén comentarios instantáneos sobre tus respuestas"
+      },
+      "3": {
+        "title": "Desafía a tus Amigos",
+        "description": "Compite con tus amigos y sigue tu progreso"
+      }
+    }
+  },
+  "quiz": {
+    "title": "Cuestionario",
+    "loading": "Tu cuestionario está cargando...",
+    "back": "Volver al inicio"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "quizzes": "Cuestionarios",
+    "profile": "Perfil"
+  }
+} 
