@@ -13,13 +13,8 @@ function middleware(request: NextRequest) {
     // Get the origin of the request
     const origin = request.headers.get('origin') || '';
     
-    // List of allowed origins (add your production/dev domains as needed)
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://127.0.0.1:3000',
-      // Add your production domain here
-    ];
-    
+    const allowedOrigins = process.env.NEXT_PUBLIC_ALLOWED_ORIGINS?.split(',') || [];
+
     // If the origin is not in our allowed list, block the request
     if (!allowedOrigins.includes(origin)) {
       return NextResponse.json(
