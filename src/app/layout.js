@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono, Space_Mono } from "next/font/google";
+import { useLocale } from 'next-intl';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -23,11 +24,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+  const locale = useLocale();
   return (
-    <html lang="vi">
+    <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable} ${spaceMono.variable} antialiased`}>
         {children}
       </body>
     </html>
-  );
+  ); 
 } 

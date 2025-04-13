@@ -7,7 +7,13 @@
     "title": "Tạo Bài Kiểm Tra Trong Vài Giây",
     "subtitle": "✨ Tận dụng sức mạnh của AI để tạo nội dung bài kiểm tra tương tác từ những yêu cầu đơn giản. 🚀 Hoàn hảo cho giáo viên 👩‍🏫, người sáng tạo nội dung 🎨 và những tâm hồn tò mò 🧠💭.",
     "cta": "Bắt Đầu Ngay",
-    "placeholder": "Nhập chủ đề cho bài trắc nghiệm của bạn (ví dụ: 'Hệ Mặt Trời', 'Chiến Tranh Thế Giới Thứ II')"
+    "placeholder": "Nhập chủ đề cho bài trắc nghiệm của bạn (ví dụ: 'Hệ Mặt Trời', 'Chiến Tranh Thế Giới Thứ II')",
+    "try_again": "Thử lại"
+  },
+  "quizForm": {
+    "title": "Tạo Trắc Nghiệm",
+    "placeholder": "Nhập chủ đề cho bài trắc nghiệm của bạn (ví dụ: 'Hệ Mặt Trời', 'Chiến Tranh Thế Giới Thứ II')",
+    "generating": "Đang tạo trắc nghiệm..."
   },
   "features": {
     "title": "Tính Năng",
@@ -54,12 +60,21 @@
 
     
   },
+  "quizCreate": {
+    "title": "Tạo Trắc Nghiệm",
+    "questions": "Câu Hỏi",
+    "useQuiz": "Sử Dụng Dữ Liệu Trắc Nghiệm",  
+    "description": "<p>✨ Hãy nhập chủ đề thú vị cho bài trắc nghiệm của bạn (ví dụ: <strong>'Hệ Mặt Trời 🪐'</strong>, <strong>'Động Vật Hoang Dã 🦁'</strong>) và nhấn <strong>'Tạo Trắc Nghiệm'</strong> để phép màu bắt đầu!</p><p>🚀 Chỉ trong vài giây, bạn sẽ có một bài trắc nghiệm tuyệt vời để học tập vui vẻ, thử thách trí tuệ 🧠 hoặc chia sẻ với bạn bè để cùng nhau tham gia cuộc phiêu lưu tri thức đầy hứng khởi!</p><p>🎮 Hãy sẵn sàng để học mà chơi, chơi mà học! 🎉</p>",
+    "explanation": "Giải Thích",
+    "createAnotherQuiz": "Tạo Trắc Nghiệm Khác",
+    "useThisQuizData": "Sử Dụng Dữ Liệu Trắc Nghiệm"
+  },
   "nav": {
-    "home": "Trang Chủ",
+    "home": "Trang Chủ",   
     "about": "Giới Thiệu",
     "quizzes": "Trắc Nghiệm",
     "profile": "Hồ Sơ",
-    "login": "Đăng Nhập",
+    "login": "Đăng Nhập", 
     "signup": "Đăng Ký",
     "logout": "Đăng Xuất"
   },

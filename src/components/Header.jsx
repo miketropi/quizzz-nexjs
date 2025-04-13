@@ -4,17 +4,20 @@ import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { useAuthStore } from '../store';
 import { useState, useRef, useEffect } from 'react';
+import { Menu, X, User, LogOut } from 'lucide-react';
 
 export default function Header() {
   const t = useTranslations();
   const locale = useLocale();
   const { user, loading, logout } = useAuthStore();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   
   const handleLogout = () => {
     logout();
     setShowDropdown(false);
+    setMobileMenuOpen(false);
   };
 
   // Close dropdown when clicking outside
@@ -32,20 +35,30 @@ export default function Header() {
   }, []);
   
   return (
-    <header className="border-b border-gray-200 bg-white shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-sm shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center">
           <Link href={`/${locale}`} className="text-xl font-bold flex items-center">
             {t('app.title')}
-            {/** beta tag */}
-            <sup className="text-xs text-gray-500 ml-2 bg-blue-500 text-white px-2 py-1 rounded-full">Beta</sup>
+            <sup className="ml-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs px-2 py-0.5 rounded-full">Beta</sup>
           </Link>
         </div>
-        <nav>
+        
+        {/* Mobile menu button */}
+        <button 
+          className="md:hidden flex items-center"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+        
+        {/* Desktop Navigation */}
+        <nav className="hidden md:block">
           <ul className="flex space-x-6 items-center">
-            <li><Link href={`/${locale}`} className="text-sm hover:text-blue-600">{t('nav.home')}</Link></li>
-            <li><Link href={`/${locale}/about`} className="text-sm hover:text-blue-600">{t('nav.about')}</Link></li>
-            <li><Link href={`/${locale}/quizzes`} className="text-sm hover:text-blue-600">{t('nav.quizzes')}</Link></li>
+            <li><Link href={`/${locale}`} className="text-sm hover:text-blue-600 transition-colors">{t('nav.home')}</Link></li>
+            <li><Link href={`/${locale}/about`} className="text-sm hover:text-blue-600 transition-colors">{t('nav.about')}</Link></li>
+            <li><Link href={`/${locale}/quizzes`} className="text-sm hover:text-blue-600 transition-colors">{t('nav.quizzes')}</Link></li>
             
             {!loading && (
               <>
@@ -53,9 +66,9 @@ export default function Header() {
                   <li className="relative" ref={dropdownRef}>
                     <button 
                       onClick={() => setShowDropdown(!showDropdown)}
-                      className="text-sm font-medium bg-blue-600 text-white px-3 py-2 rounded-md hover:bg-blue-700 flex items-center"
+                      className="text-sm font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition-all flex items-center shadow-sm"
                     >
-                      { `Hi, ${user.email}` }
+                      {`Hi, ${user.email.split('@')[0]}`}
                       <svg 
                         className={`ml-1 h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} 
                         xmlns="http://www.w3.org/2000/svg" 
@@ -71,15 +84,17 @@ export default function Header() {
                         <div className="py-1">
                           <Link 
                             href={`/${locale}/dashboard`} 
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors flex items-center"
                             onClick={() => setShowDropdown(false)}
                           >
+                            <User className="w-4 h-4 mr-2" />
                             Dashboard
                           </Link>
                           <button
                             onClick={handleLogout}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors flex items-center"
                           >
+                            <LogOut className="w-4 h-4 mr-2" />
                             {t('nav.logout') || 'Logout'}
                           </button>
                         </div>
@@ -89,12 +104,12 @@ export default function Header() {
                 ) : (
                   <>
                     <li>
-                      <Link href={`/${locale}/login`} className="text-sm hover:text-blue-600">
+                      <Link href={`/${locale}/login`} className="text-sm hover:text-blue-600 transition-colors">
                         {t('nav.login')}
                       </Link>
                     </li>
                     <li>
-                      <Link href={`/${locale}/signup`} className="text-sm font-medium bg-blue-600 text-white px-3 py-2 rounded-md hover:bg-blue-700">
+                      <Link href={`/${locale}/signup`} className="text-sm font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition-all shadow-sm">
                         {t('nav.signup')}
                       </Link>
                     </li>
@@ -105,6 +120,66 @@ export default function Header() {
           </ul>
         </nav>
       </div>
+      
+      {/* Mobile Navigation */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200 py-4 px-4 shadow-lg">
+          <nav>
+            <ul className="flex flex-col space-y-4">
+              <li><Link href={`/${locale}`} className="block text-sm py-2 hover:text-blue-600 transition-colors" onClick={() => setMobileMenuOpen(false)}>{t('nav.home')}</Link></li>
+              <li><Link href={`/${locale}/about`} className="block text-sm py-2 hover:text-blue-600 transition-colors" onClick={() => setMobileMenuOpen(false)}>{t('nav.about')}</Link></li>
+              <li><Link href={`/${locale}/quizzes`} className="block text-sm py-2 hover:text-blue-600 transition-colors" onClick={() => setMobileMenuOpen(false)}>{t('nav.quizzes')}</Link></li>
+              
+              {!loading && (
+                <>
+                  {user ? (
+                    <>
+                      <li className="pt-2 border-t border-gray-100">
+                        <Link 
+                          href={`/${locale}/dashboard`} 
+                          className="block text-sm py-2 hover:text-blue-600 transition-colors"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                      <li>
+                        <button
+                          onClick={handleLogout}
+                          className="block w-full text-left text-sm py-2 hover:text-blue-600 transition-colors"
+                        >
+                          {t('nav.logout') || 'Logout'}
+                        </button>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="pt-2 border-t border-gray-100">
+                        <Link 
+                          href={`/${locale}/login`} 
+                          className="block text-sm py-2 hover:text-blue-600 transition-colors"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {t('nav.login')}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link 
+                          href={`/${locale}/signup`} 
+                          className="block text-sm font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition-all shadow-sm mt-2"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {t('nav.signup')}
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                </>
+              )}
+            </ul>
+          </nav>
+        </div>
+      )}
     </header>
   );
 } 
