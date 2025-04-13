@@ -58,7 +58,9 @@
     "home": "Trang Chủ",
     "about": "Giới Thiệu",
     "quizzes": "Trắc Nghiệm",
-    "profile": "Hồ Sơ"
+    "profile": "Hồ Sơ",
+    "login": "Đăng Nhập",
+    "signup": "Đăng Ký"
   },
   "footer": {
     "terms": "Điều Khoản",
