@@ -171,7 +171,7 @@ export default class AIClient {
   async generateQuiz(prompt, options = {}) {
 
     const summary = await this.analyzePrompt(prompt, options);
-    console.log('summary', summary);
+    // console.log('summary', summary);
     const { topic, language, questionCount, difficulty } = summary;
 
     const systemPrompt = `You are an expert quiz creator with deep knowledge across many subjects.
@@ -235,7 +235,7 @@ Follow these guidelines:
         description,
         questions,
         createdAt: new Date().toISOString(),
-      };
+      }; 
     } catch (error) {
       console.error('Error generating quiz:', error);
       throw error;

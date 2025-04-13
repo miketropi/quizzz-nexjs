@@ -36,7 +36,6 @@ export const useQuizStore = create(
 
     generateQuiz: async () => {
       const prompt = get().prompt
-      // console.log('quiz', quiz)
       
       if (!prompt.trim()) {
         set((state) => {
@@ -51,16 +50,28 @@ export const useQuizStore = create(
       })
       
       try {
-        // TODO: Replace with actual API call to generate quiz
-        // Mock implementation for now
-        // await new Promise(resolve => setTimeout(resolve, 2000))
-        
-        const Quiz = await aiClient.generateQuiz(prompt, {
-          model: 'deepseek-chat',
-          response_format: {
-            type: "json_object"
+        // Use the REST API endpoint instead of directly calling aiClient
+        const response = await fetch('/api/v1/generate-quiz', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
+          body: JSON.stringify({ 
+            prompt,
+            model: 'deepseek-chat',
+            options: {
+              response_format: {
+                type: "json_object"
+              }
+            }
+          }),
         })
+        
+        if (!response.ok) {
+          throw new Error('Failed to generate quiz')
+        }
+        
+        const Quiz = await response.json()
         
         set((state) => {
           state.quiz = Quiz

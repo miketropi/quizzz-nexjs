@@ -49,7 +49,9 @@
     "submit": "Gửi",
     "review": "Đánh Giá",
     "reviewTitle": "Đánh Giá Trắc Nghiệm",
-    "showExplanation": "Hiển Thị Giải Thích"
+    "showExplanation": "Hiển Thị Giải Thích",
+    "noQuiz": "Không có bài trắc nghiệm nào được tìm thấy"
+
     
   },
   "nav": {
