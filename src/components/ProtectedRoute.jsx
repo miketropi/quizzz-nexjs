@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useAuth } from './AuthContext';
+import { useAuthStore } from '@/store';
 
 export default function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth();
+  const { user, loading } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
 
