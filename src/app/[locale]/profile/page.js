@@ -1,13 +1,14 @@
 'use client';
 
-import { useAuth } from '../../../components/AuthContext';
+// import { useAuth } from '../../../components/AuthContext';  
+import { useAuthStore } from '@/store';
 import ProtectedRoute from '../../../components/ProtectedRoute';
 import { logout } from '../../../services/auth';
 import { useRouter } from 'next/navigation';
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   
   const handleLogout = async () => {
     await logout();

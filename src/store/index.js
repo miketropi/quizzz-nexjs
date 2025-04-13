@@ -3,4 +3,5 @@
  */
 
 export * from './useStore';
-export * from './useQuizStore'; 
+export * from './useQuizStore';
+export * from './useAuthStore'; 

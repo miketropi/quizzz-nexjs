@@ -1,0 +1,51 @@
+import { create } from 'zustand'
+import { immer } from 'zustand/middleware/immer'
+import { subscribeToAuthChanges, logout } from '../services/auth'
+
+/**
+ * Auth-specific store using Zustand with Immer
+ * Manages authentication state and user information
+ */
+export const useAuthStore = create(
+  immer((set) => ({
+    // Auth state
+    user: null,
+    loading: true,
+
+    // Actions
+    initAuth: () => {
+      const unsubscribe = subscribeToAuthChanges((currentUser) => {
+        set((state) => {
+          state.user = currentUser;
+          state.loading = false;
+        });
+      });
+
+      return unsubscribe;
+    },
+
+    // Computed getters
+    isAuthenticated: (state) => !!state.user,
+
+    // logout
+    logout: () => {
+      logout();
+    },
+    
+  }))
+);
+
+// Initialize auth listener when this module is imported
+let unsubscribeAuth;
+
+// Only run in browser environment
+if (typeof window !== 'undefined') {
+  unsubscribeAuth = useAuthStore.getState().initAuth();
+}
+
+// Handle cleanup for hot module replacement in development
+if (process.env.NODE_ENV === 'development' && module.hot) {
+  module.hot.dispose(() => {
+    if (unsubscribeAuth) unsubscribeAuth();
+  });
+} 
