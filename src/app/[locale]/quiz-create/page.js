@@ -12,7 +12,7 @@ export default function QuizCreate() {
 
   const t = useTranslations('quizCreate'); 
   const router = useRouter();
-  const { quiz, isGenerating, error } = useQuizStore();  
+  const { quiz, isGenerating, error, saveQuiz } = useQuizStore();  
   
   useEffect(() => {
     setIsClient(true)
@@ -107,7 +107,12 @@ export default function QuizCreate() {
 
               <button 
                 type="button"
-                onClick={() => router.push('/')}
+                onClick={ e => {
+                  e.preventDefault();
+
+                  // save quiz
+                  saveQuiz();
+                } }
                 className="w-full sm:w-auto px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center cursor-pointer text-xs"
                 aria-label="Use this quiz data"  
               >

@@ -32,7 +32,7 @@ export default function QuizGeneratorForm() {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder={t('placeholder')}
-          className="w-full rounded-xl border border-gray-300 px-4 py-3 
+          className="w-full rounded-lg border border-gray-300 px-4 py-3 
                    text-gray-800 dark:text-white dark:border-gray-700
                    bg-white dark:bg-gray-800 shadow-sm
                    placeholder:text-gray-500 dark:placeholder:text-gray-400
@@ -48,7 +48,7 @@ export default function QuizGeneratorForm() {
         <button
           type="submit"
           disabled={isGenerating || !prompt.trim()}
-          className="w-full rounded-xl bg-blue-600 hover:bg-blue-700 
+          className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 
                    text-white font-medium px-6 py-3 
                    transition-colors duration-200 
                    focus:outline-none focus:ring-2 focus:ring-blue-500/50

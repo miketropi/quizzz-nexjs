@@ -3,6 +3,7 @@ import OpenAIApi from './OpenAIApi';
 import DeepseekApi from './DeepseekApi';
 import AIClient from './AIClient';
 import QuizApi from './QuizApi';
+import FirestoreApi from './FirestoreApi';
 
 // Export classes
 export {
@@ -10,7 +11,8 @@ export {
   OpenAIApi,
   DeepseekApi,
   AIClient,
-  QuizApi
+  QuizApi,
+  FirestoreApi
 };
 
 // Create and export default instances
