@@ -3,20 +3,22 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store';
+import { useLocale } from 'next-intl';
 
 export default function ProtectedRoute({ children }) {
   const { user, loading } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
+  const locale = useLocale();
 
   useEffect(() => {
     // Only redirect after auth state is loaded and if user is not logged in
     if (!loading && !user) {
       // Store the page they were trying to access for redirecting back after login
       sessionStorage.setItem('redirectAfterLogin', pathname);
-      router.push('/login');
+      router.push(`/${locale}/login`);
     }
-  }, [user, loading, router, pathname]);
+  }, [user, loading, router, pathname, locale]);
 
   // Show loading state or nothing while checking authentication
   if (loading || !user) {

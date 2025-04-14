@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { useAuthStore } from '../store';
 import { useState, useRef, useEffect } from 'react';
-import { Menu, X, User, LogOut } from 'lucide-react';
+import { Menu, X, User, LogOut, LayoutDashboard } from 'lucide-react';
 
 export default function Header() {
   const t = useTranslations();
@@ -63,44 +63,55 @@ export default function Header() {
             {!loading && (
               <>
                 {user ? (
-                  <li className="relative" ref={dropdownRef}>
-                    <button 
-                      onClick={() => setShowDropdown(!showDropdown)}
-                      className="text-sm font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition-all flex items-center shadow-sm"
-                    >
-                      {`Hi, ${user.email.split('@')[0]}`}
-                      <svg 
-                        className={`ml-1 h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        viewBox="0 0 20 20" 
-                        fill="currentColor"
+                  <>
+                    {/* <li>
+                      <Link 
+                        href={`/${locale}/dashboard`} 
+                        className="text-sm hover:text-blue-600 transition-colors flex items-center"
                       >
-                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                    
-                    {showDropdown && (
-                      <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
-                        <div className="py-1">
-                          <Link 
-                            href={`/${locale}/dashboard`} 
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors flex items-center"
-                            onClick={() => setShowDropdown(false)}
-                          >
-                            <User className="w-4 h-4 mr-2" />
-                            Dashboard
-                          </Link>
-                          <button
-                            onClick={handleLogout}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors flex items-center"
-                          >
-                            <LogOut className="w-4 h-4 mr-2" />
-                            {t('nav.logout') || 'Logout'}
-                          </button>
+                        <LayoutDashboard className="w-4 h-4 mr-1" />
+                        Dashboard
+                      </Link>
+                    </li> */}
+                    <li className="relative" ref={dropdownRef}>
+                      <button 
+                        onClick={() => setShowDropdown(!showDropdown)}
+                        className="text-sm font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition-all flex items-center shadow-sm"
+                      >
+                        {`Hi, ${user.email.split('@')[0]}`}
+                        <svg 
+                          className={`ml-1 h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          viewBox="0 0 20 20" 
+                          fill="currentColor"
+                        >
+                          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      
+                      {showDropdown && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                          <div className="py-1">
+                            <Link 
+                              href={`/${locale}/dashboard`} 
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors flex items-center"
+                              onClick={() => setShowDropdown(false)}
+                            >
+                              <User className="w-4 h-4 mr-2" />
+                              Dashboard
+                            </Link>
+                            <button
+                              onClick={handleLogout}
+                              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors flex items-center"
+                            >
+                              <LogOut className="w-4 h-4 mr-2" />
+                              {t('nav.logout') || 'Logout'}
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </li>
+                      )}
+                    </li>
+                  </>
                 ) : (
                   <>
                     <li>
@@ -137,17 +148,19 @@ export default function Header() {
                       <li className="pt-2 border-t border-gray-100">
                         <Link 
                           href={`/${locale}/dashboard`} 
-                          className="block text-sm py-2 hover:text-blue-600 transition-colors"
+                          className="block text-sm py-2 hover:text-blue-600 transition-colors flex items-center"
                           onClick={() => setMobileMenuOpen(false)}
                         >
+                          <LayoutDashboard className="w-4 h-4 mr-2" />
                           Dashboard
                         </Link>
                       </li>
                       <li>
                         <button
                           onClick={handleLogout}
-                          className="block w-full text-left text-sm py-2 hover:text-blue-600 transition-colors"
+                          className="block w-full text-left text-sm py-2 hover:text-blue-600 transition-colors flex items-center"
                         >
+                          <LogOut className="w-4 h-4 mr-2" />
                           {t('nav.logout') || 'Logout'}
                         </button>
                       </li>

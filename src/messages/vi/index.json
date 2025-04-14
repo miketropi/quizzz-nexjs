@@ -67,7 +67,13 @@
     "description": "<p>✨ Hãy nhập chủ đề thú vị cho bài trắc nghiệm của bạn (ví dụ: <strong>'Hệ Mặt Trời 🪐'</strong>, <strong>'Động Vật Hoang Dã 🦁'</strong>) và nhấn <strong>'Tạo Trắc Nghiệm'</strong> để phép màu bắt đầu!</p><p>🚀 Chỉ trong vài giây, bạn sẽ có một bài trắc nghiệm tuyệt vời để học tập vui vẻ, thử thách trí tuệ 🧠 hoặc chia sẻ với bạn bè để cùng nhau tham gia cuộc phiêu lưu tri thức đầy hứng khởi!</p><p>🎮 Hãy sẵn sàng để học mà chơi, chơi mà học! 🎉</p>",
     "explanation": "Giải Thích",
     "createAnotherQuiz": "Tạo Trắc Nghiệm Khác",
-    "useThisQuizData": "Sử Dụng Dữ Liệu Trắc Nghiệm"
+    "useThisQuizData": "Sử Dụng Dữ Liệu Trắc Nghiệm",
+    "editQuiz": "Chỉnh Sửa Trắc Nghiệm",
+    "exitEditMode": "Thoát Chỉnh Sửa",
+    "editModeOn": "Chỉnh Sửa Trắc Nghiệm: ON",
+    "editModeOff": "Chỉnh Sửa Trắc Nghiệm: OFF",
+    "editModeDocumentTitle": "Hướng Dẫn Chỉnh Sửa Trắc Nghiệm",
+    "editModeDocument": "🎮 Hey! ✏️ Tại đây, bạn có thể bật chế độ tùy chỉnh tiêu đề và mô tả trắc nghiệm theo ý thích. 🔄 Thỏa sức sáng tạo với việc chỉnh sửa, thêm mới, xóa bỏ hoặc sắp xếp lại thứ tự câu hỏi một cách dễ dàng! 🎯 Điều chỉnh các tùy chọn trả lời, thay đổi đáp án đúng và làm phong phú phần giải thích của bạn. ✨ Khi hoàn thành tác phẩm tuyệt vời của mình, hãy nhấn <strong>Lưu Thay Đổi</strong> để lưu lại thành quả nhé! 🚀"
   },
   "nav": {
     "home": "Trang Chủ",   
@@ -82,5 +88,39 @@
     "terms": "Điều Khoản",
     "privacy": "Quyền Riêng Tư",
     "contact": "Liên Hệ"
+  },
+  "dashboard": {
+    "title": "Bảng Điều Khiển",
+    "welcome": "Hi",
+    "quizzes": "Trắc Nghiệm",
+    "activity": "Hoạt Động",
+    "profile": "Hồ Sơ",
+    "settings": "Cài Đặt",
+    "confirmDelete": "Bạn có chắc chắn muốn xóa bài trắc nghiệm này không?",
+    "yourQuizzes": "Trắc Nghiệm Của Bạn",
+    "noQuizzes": "Không có bài trắc nghiệm nào được tìm thấy",
+    "startCreating": "Bắt đầu tạo trắc nghiệm của bạn",
+    "createQuiz": "Tạo Trắc Nghiệm",
+    "activityComingSoon": "Hoạt Động sắp ra mắt",
+    "recentActivity": "Hoạt Động Gần Đây",
+    "profileInfo": "Thông Tin Hồ Sơ",
+    "email": "Email",
+    "userId": "ID Người Dùng",
+    "accountCreated": "Tài Khoản Được Tạo Vào",
+    "accountSettings": "Cài Đặt Tài Khoản",
+    "settingsComingSoon": "Cài Đặt sắp ra mắt",
+    "view": "Xem",
+    "delete": "Xóa",
+    "questions": "Câu Hỏi",
+    "quizTitle": "Tiêu Đề Trắc Nghiệm", 
+    "description": "Mô Tả",
+    "date": "Ngày",
+    "actions": "Hành Động",
+    "tabs": {
+      "quizzes": "Trắc Nghiệm",
+      "activity": "Hoạt Động",
+      "profile": "Hồ Sơ",
+      "settings": "Cài Đặt"
+    }
   }
 } 

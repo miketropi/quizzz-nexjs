@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import quizService from '@/services/quizService'
-
+import { useAuthStore } from '@/store'
 /**
  * Quiz-specific store using Zustand with Immer
  * Manages quiz generation, questions, answers, and user interactions
@@ -99,15 +99,23 @@ export const useQuizStore = create(
       
       
       // Quiz management
-      saveQuiz: async () => {
+      saveQuiz: async (editedQuiz) => {
+        // If an edited quiz is provided, update the current quiz
+        if (editedQuiz) {
+          set((state) => {
+            state.quiz = editedQuiz
+          })
+        }
+        
         // This is now handled automatically by the persist middleware
         // console.log('Quiz state is automatically saved to localStorage')
 
         // save quiz to firestore
-        const quiz = await quizService.createQuiz(get().quiz)
+        const quizToSave = editedQuiz || get().quiz
+        const { user } = useAuthStore.getState()
+        const quiz = await quizService.createQuiz({...quizToSave, userId: user.uid})
 
         console.log('Quiz saved to firestore', quiz)
-        
       },
       
       deleteQuizFromHistory: (quizId) => set((state) => {

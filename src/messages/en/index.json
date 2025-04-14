@@ -35,11 +35,40 @@
     "home": "Home",
     "about": "About",
     "quizzes": "Quizzes",
-    "profile": "Profile"
+    "profile": "Profile",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout"
   },
   "footer": {
     "terms": "Terms",
     "privacy": "Privacy",
     "contact": "Contact"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "tabs": {
+      "quizzes": "My Quizzes",
+      "activity": "Activity",
+      "profile": "Profile",
+      "settings": "Settings"
+    },
+    "yourQuizzes": "Your Quizzes",
+    "createQuiz": "Create Quiz",
+    "noQuizzes": "No quizzes yet",
+    "startCreating": "Start creating your first quiz",
+    "questions": "questions",
+    "view": "View Quiz",
+    "delete": "Delete",
+    "confirmDelete": "Are you sure you want to delete this quiz?",
+    "recentActivity": "Recent Activity",
+    "activityComingSoon": "Activity tracking coming soon",
+    "profileInfo": "Profile Information",
+    "email": "Email",
+    "userId": "User ID",
+    "accountCreated": "Account Created",
+    "accountSettings": "Account Settings",
+    "settingsComingSoon": "Account settings coming soon"
   }
 } 
