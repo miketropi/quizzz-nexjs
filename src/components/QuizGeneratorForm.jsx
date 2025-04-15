@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useQuizStore } from '@/store';
 import { useTranslations, useLocale } from 'next-intl';
 import { Bot } from 'lucide-react';
+import { useToast } from '@/components/Toast';
+
 export default function QuizGeneratorForm() {
   const t = useTranslations('quizForm');
   const locale = useLocale();
@@ -12,7 +14,7 @@ export default function QuizGeneratorForm() {
   const setPrompt = useQuizStore(state => state.setPrompt);
   const isGenerating = useQuizStore(state => state.isGenerating);
   const generateQuiz = useQuizStore(state => state.generateQuiz);
-
+  const toast = useToast();
   const handleGenerateQuiz = async (e) => {
     e.preventDefault();
     
@@ -20,6 +22,9 @@ export default function QuizGeneratorForm() {
     
     // Generate the quiz using our store
     await generateQuiz();
+
+    // show toast generate quiz success
+    toast.success(t('quizGeneratedSuccess'));
     
     // Navigate to the quiz page with locale
     router.push(`/${locale}/quiz-create`);

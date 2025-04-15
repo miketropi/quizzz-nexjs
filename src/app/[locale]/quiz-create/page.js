@@ -12,7 +12,7 @@ export default function QuizCreate() {
 
   const t = useTranslations('quizCreate'); 
   const router = useRouter();
-  const { quiz, isGenerating, error, saveQuiz } = useQuizStore();  
+  const { quiz, isGenerating, error, saveQuiz, updateQuiz } = useQuizStore();  
   
   useEffect(() => {
     setIsClient(true)
@@ -28,11 +28,11 @@ export default function QuizCreate() {
         <QuizGeneratorForm />
       </div>
 
-      { isGenerating && <p>Generating quiz...</p> }
+      {/* { isGenerating && <p>Generating quiz...</p> } */}
       { error && <p>Error: {error}</p> }
       
       {quiz && quiz.questions && quiz.questions.length > 0 && (
-        <QuizReview quiz={quiz} saveQuiz={saveQuiz} />
+        <QuizReview quiz={quiz} updateQuiz={updateQuiz} saveQuiz={saveQuiz} />
       )}
     </div>
   );

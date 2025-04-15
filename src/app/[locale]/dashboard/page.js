@@ -12,6 +12,7 @@ import SettingsTab from '@/components/dashboard/SettingsTab';
 import Loader from '@/components/dashboard/Loader';
 import quizService from '@/services/quizService';
 import userService from '@/services/userService';
+import { useConfirm } from '@/components/Confirm';
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -19,7 +20,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState(null);
   const [activeTab, setActiveTab] = useState('quizzes');
-
+  const confirm = useConfirm();
   useEffect(() => {
     const fetchUserData = async () => {
       if (user) {
@@ -44,17 +45,6 @@ export default function DashboardPage() {
     fetchUserData();
   }, [user]);
 
-  const handleDeleteQuiz = async (quizId) => {
-    if (window.confirm('Are you sure you want to delete this quiz?')) {
-      try {
-        await quizService.deleteQuiz(quizId);
-        setUserQuizzes(userQuizzes.filter(quiz => quiz.id !== quizId));
-      } catch (error) {
-        console.error('Error deleting quiz:', error);
-      }
-    }
-  };
-
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
@@ -75,7 +65,6 @@ export default function DashboardPage() {
               {activeTab === 'quizzes' && (
                 <QuizzesTab 
                   userQuizzes={userQuizzes}
-                  handleDeleteQuiz={handleDeleteQuiz}
                 />
               )}
               

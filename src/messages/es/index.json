@@ -35,5 +35,38 @@
     "about": "Acerca de",
     "quizzes": "Cuestionarios",
     "profile": "Perfil"
+  },
+  "dashboard": {
+    "title": "Panel de Control",
+    "view": "Ver",
+    "delete": "Eliminar",
+    "takeExam": "Hacer Examen",
+    "questions": "Preguntas"
+  },
+  "exam": {
+    "title": "Examen",
+    "loading": "Cargando examen...",
+    "error": "No se pudo cargar el examen. Por favor, inténtelo de nuevo más tarde.",
+    "goBack": "Volver",
+    "question": "Pregunta",
+    "of": "de",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submitExam": "Enviar Examen",
+    "timeRemaining": "Tiempo Restante",
+    "flagQuestion": "Marcar para revisar",
+    "flaggedQuestions": "Preguntas marcadas",
+    "answered": "Respondidas",
+    "unanswered": "Sin responder",
+    "questionNavigation": "Navegación de Preguntas",
+    "cantChangeAnswers": "Nota: No podrá cambiar sus respuestas después de enviarlas",
+    "examComplete": "Examen Completado",
+    "yourScore": "Su Puntuación",
+    "correctAnswers": "Respuestas Correctas",
+    "explanation": "Explicación",
+    "correct": "Correcto",
+    "incorrect": "Incorrecto",
+    "correctAnswer": "Respuesta Correcta",
+    "returnToDashboard": "Volver al Panel"
   }
 } 

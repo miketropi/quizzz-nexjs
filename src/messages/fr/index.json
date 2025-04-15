@@ -35,5 +35,38 @@
     "about": "À Propos",
     "quizzes": "Quiz",
     "profile": "Profil"
+  },
+  "dashboard": {
+    "title": "Tableau de Bord",
+    "view": "Voir",
+    "delete": "Supprimer",
+    "takeExam": "Passer l'Examen",
+    "questions": "Questions"
+  },
+  "exam": {
+    "title": "Examen",
+    "loading": "Chargement de l'examen...",
+    "error": "Échec du chargement de l'examen. Veuillez réessayer plus tard.",
+    "goBack": "Retour",
+    "question": "Question",
+    "of": "sur",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "submitExam": "Soumettre l'Examen",
+    "timeRemaining": "Temps Restant",
+    "flagQuestion": "Marquer pour révision",
+    "flaggedQuestions": "Questions marquées",
+    "answered": "Répondu",
+    "unanswered": "Sans réponse",
+    "questionNavigation": "Navigation des Questions",
+    "cantChangeAnswers": "Note: Vous ne pourrez pas modifier vos réponses après soumission",
+    "examComplete": "Examen Terminé",
+    "yourScore": "Votre Score",
+    "correctAnswers": "Réponses Correctes",
+    "explanation": "Explication",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "correctAnswer": "Bonne Réponse",
+    "returnToDashboard": "Retour au Tableau de Bord"
   }
 } 

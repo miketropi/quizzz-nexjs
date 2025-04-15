@@ -76,7 +76,11 @@ export const useQuizStore = create(
           const Quiz = await response.json()
           
           set((state) => {
-            state.quiz = Quiz
+            state.quiz = {
+              ...Quiz,
+              status: 'public', // public, private, draft
+              limitTime: null, // in seconds, null for no limit
+            }
             state.quizHistory.push({
               id: Date.now(),
               title: Quiz.title,
@@ -96,7 +100,9 @@ export const useQuizStore = create(
         }
       },
       
-      
+      updateQuiz: (editedQuiz) => set((state) => {
+        state.quiz = editedQuiz
+      }),
       
       // Quiz management
       saveQuiz: async (editedQuiz) => {

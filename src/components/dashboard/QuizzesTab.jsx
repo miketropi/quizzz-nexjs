@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { PlusCircle, BookOpen } from 'lucide-react';
 import QuizTable from './QuizTable';
 
-export default function QuizzesTab({ userQuizzes, handleDeleteQuiz }) {
+export default function QuizzesTab({ userQuizzes }) {
   const t = useTranslations();
   const locale = useLocale();
   
@@ -38,7 +38,8 @@ export default function QuizzesTab({ userQuizzes, handleDeleteQuiz }) {
           </Link>
         </div>
       ) : (
-        <QuizTable quizzes={userQuizzes} handleDeleteQuiz={handleDeleteQuiz} />
+        <QuizTable 
+          quizzes={userQuizzes}  />
       )}
     </div>
   );

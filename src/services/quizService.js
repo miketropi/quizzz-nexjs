@@ -81,6 +81,16 @@ class QuizService {
   }
 
   /**
+   * Update the status of a quiz
+   * @param {string} quizId - Quiz ID
+   * @param {string} status - Status to update to
+   * @returns {Promise<Object>} - Updated quiz document
+   */
+  async updateQuizStatus(quizId, status) {
+    return this.api.update(quizId, { status });
+  }
+
+  /**
    * Delete a quiz
    * @param {string} quizId - Quiz ID
    * @returns {Promise<Object>} - Deletion result

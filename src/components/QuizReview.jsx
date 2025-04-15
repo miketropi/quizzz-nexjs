@@ -1,13 +1,19 @@
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
-import { RefreshCcw, MousePointerClick, Edit, Trash, Plus, ArrowUp, ArrowDown, Save, X, Toggle } from 'lucide-react';
-
-export default function QuizReview({ quiz, saveQuiz }) {
+import { RefreshCcw, MousePointerClick, Edit, Trash, Plus, ArrowUp, ArrowDown, Save, X, Toggle, Clock, Eye } from 'lucide-react';
+import { useToast } from '@/components/Toast';
+import { useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
+ 
+export default function QuizReview({ quiz, updateQuiz, saveQuiz }) {
   const t = useTranslations('quizCreate');
   const [editMode, setEditMode] = useState(false);
   const [editedQuiz, setEditedQuiz] = useState(quiz);
   const [editingQuestionId, setEditingQuestionId] = useState(null);
   const [isClient, setIsClient] = useState(false);
+  const toast = useToast();
+  const router = useRouter();
+  const locale = useLocale();
 
   useEffect(() => {
     setIsClient(true);
@@ -29,8 +35,10 @@ export default function QuizReview({ quiz, saveQuiz }) {
 
   // Handler for saving changes
   const handleSaveChanges = () => {
-    saveQuiz(editedQuiz);
+    updateQuiz(editedQuiz);
     setEditMode(false);
+
+    toast.success(t('quizUpdatedSuccessfully'), 3000);
   };
 
   // Handler for updating quiz title and description
@@ -132,6 +140,7 @@ export default function QuizReview({ quiz, saveQuiz }) {
 
   return (
     <div className="bg-white rounded-lg p-6 my-6 border border-gray-200">
+      
       { /** document user guide for edit mode */ }
       <div className="bg-blue-100 border border-blue-300 rounded-lg p-5 mb-6">
         <div className="flex items-start">
@@ -165,7 +174,7 @@ export default function QuizReview({ quiz, saveQuiz }) {
           className={`px-4 py-2 text-xs rounded-lg transition-colors flex items-center ${
             editMode 
               ? 'bg-blue-100 text-blue-700 hover:bg-blue-200 border border-blue-300' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300'
+              : 'bg-orange-100 text-orange-800 hover:bg-orange-200 border-1 border-orange-300 font-semibold'
           }`}
         >
           {editMode ? (
@@ -195,14 +204,94 @@ export default function QuizReview({ quiz, saveQuiz }) {
               <textarea 
                 value={editedQuiz.description} 
                 onChange={(e) => updateQuizDetails('description', e.target.value)}
-                className="w-full text-gray-600 border-b border-gray-300 focus:outline-none focus:border-blue-500"
+                className="w-full text-gray-600 border-b border-gray-300 focus:outline-none focus:border-blue-500 mt-4"
                 rows={2}
               />
+              
+              {/* Quiz Settings Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 pt-4 border-t border-gray-200">
+                {/* Status Selection */}
+                <div className="flex flex-col">
+                  <label htmlFor="quizStatus" className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                    <Eye className="w-4 h-4 mr-2" />
+                    Status
+                  </label>
+                  <select
+                    id="quizStatus"
+                    value={editedQuiz.status || 'draft'}
+                    onChange={(e) => updateQuizDetails('status', e.target.value)}
+                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  >
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                    <option value="draft">Draft</option>
+                  </select>
+                </div>
+                
+                {/* Time Limit */}
+                <div className="flex flex-col">
+                  <label htmlFor="quizTimeLimit" className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                    <Clock className="w-4 h-4 mr-2" />
+                    Time Limit (seconds, 0 for no limit)
+                  </label>
+                  <input
+                    id="quizTimeLimit"
+                    type="number"
+                    min="0"
+                    value={editedQuiz.limitTime || 0}
+                    onChange={(e) => updateQuizDetails('limitTime', e.target.value === '0' ? null : parseInt(e.target.value, 10) || 0)}
+                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    {editedQuiz.limitTime ? `${Math.floor(editedQuiz.limitTime / 60)}m ${editedQuiz.limitTime % 60}s` : 'No time limit'}
+                  </p>
+
+                  {/** preset time limit options 5 minutes, 10 minutes, 15 minutes, 20 minutes, 25 minutes, 30 minutes */}
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <button 
+                      type="button" 
+                      onClick={() => updateQuizDetails('limitTime', 300)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium  ${editedQuiz.limitTime === 300 ? 'bg-blue-500 text-white' : ' bg-gray-100 text-gray-800'}`}
+                    >
+                      5 minutes
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => updateQuizDetails('limitTime', 600)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium  ${editedQuiz.limitTime === 600 ? 'bg-blue-500 text-white' : ' bg-gray-100 text-gray-800'}`}
+                    >
+                      10 minutes
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => updateQuizDetails('limitTime', 900)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium  ${editedQuiz.limitTime === 900 ? 'bg-blue-500 text-white' : ' bg-gray-100 text-gray-800'}`}
+                    >
+                      15 minutes
+                    </button>
+                  </div>
+                  
+                </div>
+
+
+              </div>
             </div>
           ) : (
             <>
               <h2 className="text-2xl font-bold text-gray-800">{quiz.title} ({quiz.questions.length} {t('questions')})</h2>
               <p className="text-gray-600 mt-2">{quiz.description}</p>
+              
+              {/* Display Quiz Settings when not in edit mode */}
+              <div className="flex flex-wrap gap-4 mt-4">
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  <Eye className="w-3 h-3 mr-1" />
+                  Status: {quiz.status || 'Draft'}
+                </div>
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  <Clock className="w-3 h-3 mr-1" />
+                  Time: {quiz.limitTime ? `${Math.floor(quiz.limitTime / 60)}m ${quiz.limitTime % 60}s` : 'No limit'}
+                </div>
+              </div>
             </>
           )}
         </div>
@@ -371,7 +460,7 @@ export default function QuizReview({ quiz, saveQuiz }) {
                   e.preventDefault();
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="w-full sm:w-auto px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center cursor-pointer text-xs"
+                className="w-full sm:w-auto px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center cursor-pointer text-xs font-bold"
                 aria-label="Create another quiz"
               >
                 <span className="mr-2">
@@ -385,8 +474,11 @@ export default function QuizReview({ quiz, saveQuiz }) {
                 onClick={e => {
                   e.preventDefault();
                   saveQuiz();
+
+                  // redirect to dashboard page
+                  router.push(`/${locale}/dashboard`);
                 }}
-                className="w-full sm:w-auto px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center cursor-pointer text-xs"
+                className="w-full sm:w-auto px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center cursor-pointer text-xs font-bold"
                 aria-label="Use this quiz data"  
               >
                 <span className="mr-2">

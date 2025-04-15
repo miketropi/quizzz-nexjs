@@ -13,7 +13,8 @@
   "quizForm": {
     "title": "Tạo Trắc Nghiệm",
     "placeholder": "Nhập chủ đề cho bài trắc nghiệm của bạn (ví dụ: 'Hệ Mặt Trời', 'Chiến Tranh Thế Giới Thứ II')",
-    "generating": "Đang tạo trắc nghiệm..."
+    "generating": "Đang tạo trắc nghiệm...",
+    "quizGeneratedSuccess": "Trắc Nghiệm Đã Được Tạo Thành Công"
   },
   "features": {
     "title": "Tính Năng",
@@ -57,8 +58,32 @@
     "reviewTitle": "Đánh Giá Trắc Nghiệm",
     "showExplanation": "Hiển Thị Giải Thích",
     "noQuiz": "Không có bài trắc nghiệm nào được tìm thấy"
-
-    
+  },
+  "exam": {
+    "title": "Bài Kiểm Tra",
+    "loading": "Đang tải bài kiểm tra...",
+    "error": "Không thể tải bài kiểm tra. Vui lòng thử lại sau.",
+    "goBack": "Quay Lại",
+    "question": "Câu hỏi",
+    "of": "của",
+    "next": "Tiếp Theo",
+    "previous": "Trước",
+    "submitExam": "Nộp Bài",
+    "timeRemaining": "Thời Gian Còn Lại",
+    "flagQuestion": "Đánh dấu để xem lại",
+    "flaggedQuestions": "Câu hỏi đã đánh dấu",
+    "answered": "Đã trả lời",
+    "unanswered": "Chưa trả lời",
+    "questionNavigation": "Điều Hướng Câu Hỏi",
+    "cantChangeAnswers": "Lưu ý: Bạn không thể thay đổi câu trả lời sau khi nộp bài",
+    "examComplete": "Hoàn Thành Bài Kiểm Tra",
+    "yourScore": "Điểm Của Bạn",
+    "correctAnswers": "Câu Trả Lời Đúng",
+    "explanation": "Giải Thích",
+    "correct": "Đúng",
+    "incorrect": "Sai",
+    "correctAnswer": "Câu Trả Lời Đúng",
+    "returnToDashboard": "Quay Lại Trang Chủ"
   },
   "quizCreate": {
     "title": "Tạo Trắc Nghiệm",
@@ -73,7 +98,8 @@
     "editModeOn": "Chỉnh Sửa Trắc Nghiệm: ON",
     "editModeOff": "Chỉnh Sửa Trắc Nghiệm: OFF",
     "editModeDocumentTitle": "Hướng Dẫn Chỉnh Sửa Trắc Nghiệm",
-    "editModeDocument": "🎮 Hey! ✏️ Tại đây, bạn có thể bật chế độ tùy chỉnh tiêu đề và mô tả trắc nghiệm theo ý thích. 🔄 Thỏa sức sáng tạo với việc chỉnh sửa, thêm mới, xóa bỏ hoặc sắp xếp lại thứ tự câu hỏi một cách dễ dàng! 🎯 Điều chỉnh các tùy chọn trả lời, thay đổi đáp án đúng và làm phong phú phần giải thích của bạn. ✨ Khi hoàn thành tác phẩm tuyệt vời của mình, hãy nhấn <strong>Lưu Thay Đổi</strong> để lưu lại thành quả nhé! 🚀"
+    "editModeDocument": "🎮 Hey! ✏️ Tại đây, bạn có thể bật chế độ tùy chỉnh tiêu đề và mô tả trắc nghiệm theo ý thích. 🔄 Thỏa sức sáng tạo với việc chỉnh sửa, thêm mới, xóa bỏ hoặc sắp xếp lại thứ tự câu hỏi một cách dễ dàng! 🎯 Điều chỉnh các tùy chọn trả lời, thay đổi đáp án đúng và làm phong phú phần giải thích của bạn. ✨ Khi hoàn thành tác phẩm tuyệt vời của mình, hãy nhấn <strong>Lưu Thay Đổi</strong> để lưu lại thành quả nhé! 🚀",
+    "quizUpdatedSuccessfully": "Trắc Nghiệm Đã Được Cập Nhật Thành Công"
   },
   "nav": {
     "home": "Trang Chủ",   
@@ -111,11 +137,22 @@
     "settingsComingSoon": "Cài Đặt sắp ra mắt",
     "view": "Xem",
     "delete": "Xóa",
+    "takeExam": "Làm Bài",
     "questions": "Câu Hỏi",
     "quizTitle": "Tiêu Đề Trắc Nghiệm", 
     "description": "Mô Tả",
     "date": "Ngày",
     "actions": "Hành Động",
+    "status": "Trạng Thái",
+    "timeLimit": "Giới Hạn Thời Gian",
+    "noLimit": "Không Giới Hạn",
+    "confirmBulkDelete": "Xóa Nhiều Trắc Nghiệm",
+    "confirmBulkDeleteDesc": "Bạn có chắc chắn muốn xóa các trắc nghiệm đã chọn không?",
+    "deleteSelected": "Xóa Trắc Nghiệm Đã Chọn",
+    "makePublic": "Làm Công Khai",
+    "makePrivate": "Làm Riêng Tư",
+    "confirmBulkStatusUpdate": "Cập Nhật Trạng Thái",
+    "confirmBulkStatusUpdateDesc": "Bạn có chắc chắn muốn cập nhật trạng thái của các trắc nghiệm đã chọn không?",
     "tabs": {
       "quizzes": "Trắc Nghiệm",
       "activity": "Hoạt Động",
