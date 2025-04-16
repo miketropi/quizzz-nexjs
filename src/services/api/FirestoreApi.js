@@ -101,6 +101,8 @@ export default class FirestoreApi {
    * @returns {Promise<Object|null>} - Document data with ID or null if not found
    */
   async getById(docId, collectionPath = this.collectionName) {
+    
+
     const docRef = this.getDocRef(docId, collectionPath);
     const docSnap = await getDoc(docRef);
     
@@ -113,7 +115,7 @@ export default class FirestoreApi {
     
     return null;
   }
-  
+
   /**
    * Query documents with filters
    * @param {Array} filters - Array of filter conditions [{ field, operator, value }]

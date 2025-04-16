@@ -41,6 +41,7 @@ export const loginWithGithub = async () => {
   try {
     const provider = new GithubAuthProvider();
     const userCredential = await signInWithPopup(auth, provider);
+
     return { user: userCredential.user, error: null };
   } catch (error) {
     return { user: null, error: error.message };
@@ -50,6 +51,7 @@ export const loginWithGithub = async () => {
 export const logout = async () => {
   try {
     await signOut(auth);
+
     return { success: true, error: null };
   } catch (error) {
     return { success: false, error: error.message };

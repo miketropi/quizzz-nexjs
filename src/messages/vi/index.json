@@ -83,7 +83,18 @@
     "correct": "Đúng",
     "incorrect": "Sai",
     "correctAnswer": "Câu Trả Lời Đúng",
-    "returnToDashboard": "Quay Lại Trang Chủ"
+    "returnToDashboard": "Quay Lại Trang Chủ",
+    "totalQuestions": "Tổng Số Câu Hỏi",
+    "timeLimit": "Giới Hạn Thời Gian",
+    "minutes": "Phút",
+    "readyToStart": "Sẵn Sàng Bắt Đầu",
+    "clickStartWhenReady": "Nhấn Bắt Đầu Khi Sẵn Sàng",
+    "submitExam": "Nộp Bài",
+    "startExam": "Bắt Đầu Bài Kiểm Tra",
+    "examInstructions": "Hướng Dẫn Bài Kiểm Tra",
+    "clearProgressAndReturn": "Xóa Tiến Trình Và Quay Lại",
+    "clearProgressAndTryAgain": "Xóa Tiến Trình Và Thử Lại",
+    "tryAgain": "Thử Lại"
   },
   "quizCreate": {
     "title": "Tạo Trắc Nghiệm",
@@ -99,7 +110,9 @@
     "editModeOff": "Chỉnh Sửa Trắc Nghiệm: OFF",
     "editModeDocumentTitle": "Hướng Dẫn Chỉnh Sửa Trắc Nghiệm",
     "editModeDocument": "🎮 Hey! ✏️ Tại đây, bạn có thể bật chế độ tùy chỉnh tiêu đề và mô tả trắc nghiệm theo ý thích. 🔄 Thỏa sức sáng tạo với việc chỉnh sửa, thêm mới, xóa bỏ hoặc sắp xếp lại thứ tự câu hỏi một cách dễ dàng! 🎯 Điều chỉnh các tùy chọn trả lời, thay đổi đáp án đúng và làm phong phú phần giải thích của bạn. ✨ Khi hoàn thành tác phẩm tuyệt vời của mình, hãy nhấn <strong>Lưu Thay Đổi</strong> để lưu lại thành quả nhé! 🚀",
-    "quizUpdatedSuccessfully": "Trắc Nghiệm Đã Được Cập Nhật Thành Công"
+    "quizUpdatedSuccessfully": "Trắc Nghiệm Đã Được Cập Nhật Thành Công",
+    "backToDashboard": "Quay Lại Dashboard",
+    "quizSavedSuccessfully": "Trắc Nghiệm Đã Được Lưu Thành Công"
   },
   "nav": {
     "home": "Trang Chủ",   
@@ -153,6 +166,7 @@
     "makePrivate": "Làm Riêng Tư",
     "confirmBulkStatusUpdate": "Cập Nhật Trạng Thái",
     "confirmBulkStatusUpdateDesc": "Bạn có chắc chắn muốn cập nhật trạng thái của các trắc nghiệm đã chọn không?",
+    "edit": "Chỉnh Sửa",
     "tabs": {
       "quizzes": "Trắc Nghiệm",
       "activity": "Hoạt Động",

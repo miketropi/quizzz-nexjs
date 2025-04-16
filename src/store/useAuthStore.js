@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 import { subscribeToAuthChanges, logout } from '../services/auth'
+import nookies from 'nookies';
 
 /**
  * Auth-specific store using Zustand with Immer
@@ -13,9 +14,18 @@ export const useAuthStore = create(
     loading: true,
 
     // Actions
-    initAuth: () => {
-      const unsubscribe = subscribeToAuthChanges((currentUser) => {
-        set((state) => {
+    initAuth: async () => {
+      const unsubscribe = subscribeToAuthChanges(async (currentUser) => {
+        // console.log('________________User is logged in:', token); 
+
+        if (currentUser) {
+          const token = await currentUser.getIdToken();
+          nookies.set(undefined, 'token', token, { path: '/' });
+        } else {
+          nookies.destroy(undefined, 'token');
+        }
+
+        set((state) => { 
           state.user = currentUser;
           state.loading = false;
         });

@@ -46,6 +46,11 @@ class QuizService {
     return this.api.getById(quizId);
   }
 
+  // get quiz by id and token
+  async getQuizByIdAndToken(quizId, token) {
+    return this.api.getByIdAndToken(quizId, token);
+  }
+
   /**
    * Get quizzes created by a specific user
    * @param {string} userId - User ID

@@ -31,6 +31,9 @@ export const useQuizStore = create(
       currentQuestion: 0,
       quizCompleted: false,
       
+      // Exam/quiz taking state
+      examState: {}, // Will hold exam states for different quizzes by ID
+      
       // Actions for quiz creation
       setPrompt: (prompt) => set((state) => {
         state.prompt = prompt
@@ -126,7 +129,83 @@ export const useQuizStore = create(
       
       deleteQuizFromHistory: (quizId) => set((state) => {
         state.quizHistory = state.quizHistory.filter(q => q.id !== quizId)
-      })
+      }),
+      
+      // Exam actions
+      startExam: (quizId, timeLimit) => set((state) => {
+        // Initialize exam state for this quiz
+        state.examState[quizId] = {
+          started: true,
+          timeLeft: timeLimit,
+          userAnswers: {},
+          currentQuestionIndex: 0,
+          flaggedQuestions: [],
+          completed: false,
+          result: null
+        }
+      }),
+      
+      updateExamProgress: (quizId, data) => set((state) => {
+        if (!state.examState[quizId]) {
+          state.examState[quizId] = {
+            started: true,
+            timeLeft: data.timeLeft || null,
+            userAnswers: {},
+            currentQuestionIndex: 0,
+            flaggedQuestions: [],
+            completed: false,
+            result: null
+          }
+        }
+        
+        // Update with provided data
+        state.examState[quizId] = {
+          ...state.examState[quizId],
+          ...data
+        }
+      }),
+      
+      saveExamAnswer: (quizId, questionId, answer) => set((state) => {
+        if (!state.examState[quizId]) return
+        
+        state.examState[quizId].userAnswers = {
+          ...state.examState[quizId].userAnswers,
+          [questionId]: answer
+        }
+      }),
+      
+      toggleFlaggedQuestion: (quizId, questionId) => set((state) => {
+        if (!state.examState[quizId]) return
+        
+        const currentFlagged = state.examState[quizId].flaggedQuestions || []
+        
+        if (currentFlagged.includes(questionId)) {
+          state.examState[quizId].flaggedQuestions = currentFlagged.filter(id => id !== questionId)
+        } else {
+          state.examState[quizId].flaggedQuestions = [...currentFlagged, questionId]
+        }
+      }),
+      
+      updateTimeLeft: (quizId, timeLeft) => set((state) => {
+        if (!state.examState[quizId]) return
+        
+        state.examState[quizId].timeLeft = timeLeft
+      }),
+      
+      completeExam: (quizId, resultData) => set((state) => {
+        if (!state.examState[quizId]) return
+        
+        state.examState[quizId].completed = true
+        state.examState[quizId].result = resultData
+      }),
+      
+      clearExamProgress: (quizId) => set((state) => {
+        delete state.examState[quizId]
+      }),
+      
+      getExamState: (quizId) => {
+        return get().examState[quizId] || null
+      }
     })),
     {
       name: 'quiz-storage', // unique name for localStorage
@@ -138,7 +217,8 @@ export const useQuizStore = create(
         quizHistory: state.quizHistory,
         userAnswers: state.userAnswers,
         currentQuestion: state.currentQuestion,
-        quizCompleted: state.quizCompleted
+        quizCompleted: state.quizCompleted,
+        examState: state.examState
       }),
     }
   )

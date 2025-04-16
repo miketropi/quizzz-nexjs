@@ -1,0 +1,633 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { CheckCircle2, Timer, AlertTriangle, ArrowLeft, ArrowRight, Flag, CheckCircle } from 'lucide-react';
+import { useQuizStore } from '@/store';
+import quizService from '@/services/quizService';
+import { use } from 'react';
+// server component for data fetching
+export default function ExamPage({ params }) {
+  const t = useTranslations('exam');
+  const router = useRouter();
+  const { id } = use(params);
+  
+  // Get actions and state from zustand store
+  const { 
+    getExamState, 
+    startExam, 
+    updateExamProgress, 
+    saveExamAnswer, 
+    toggleFlaggedQuestion,
+    updateTimeLeft,
+    completeExam,
+    clearExamProgress
+  } = useQuizStore();
+  
+  // State for quiz data and user interaction
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [quiz, setQuiz] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [examCompleted, setExamCompleted] = useState(false);
+  const [examResult, setExamResult] = useState(null);
+  const [flaggedQuestions, setFlaggedQuestions] = useState([]);
+  const [examStarted, setExamStarted] = useState(false);
+
+  // Load quiz data when component mounts
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try {
+        setLoading(true);
+        const quizData = await quizService.getQuizById(id);
+        setQuiz(quizData);
+        
+        // Check if there's saved progress in the store
+        const savedState = getExamState(id);
+        if (savedState && savedState.started) {
+          setExamStarted(savedState.started);
+          
+          if (savedState.userAnswers) {
+            setUserAnswers(savedState.userAnswers);
+          }
+          
+          if (savedState.currentQuestionIndex !== undefined) {
+            setCurrentQuestionIndex(savedState.currentQuestionIndex);
+          }
+          
+          if (savedState.flaggedQuestions) {
+            setFlaggedQuestions(savedState.flaggedQuestions);
+          }
+          
+          if (savedState.timeLeft !== undefined && quizData.limitTime) {
+            // If there's a saved time, use it, otherwise use the full time
+            setTimeLeft(savedState.timeLeft > 0 ? savedState.timeLeft : quizData.limitTime);
+          }
+          
+          if (savedState.completed) {
+            setExamCompleted(savedState.completed);
+            if (savedState.result) {
+              setExamResult(savedState.result);
+            }
+          }
+        }
+        
+        // Don't start timer yet, wait for user to click start
+        setLoading(false);
+      } catch (err) {
+        console.error('Failed to load quiz:', err);
+        setError('Failed to load quiz. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    fetchQuiz();
+  }, [id, getExamState]);
+
+  // Save progress to store whenever relevant state changes
+  useEffect(() => {
+    if (!quiz || !examStarted) return;
+    
+    updateExamProgress(id, {
+      started: examStarted,
+      userAnswers,
+      currentQuestionIndex,
+      flaggedQuestions,
+      timeLeft,
+      completed: examCompleted,
+      result: examResult
+    });
+  }, [
+    quiz, 
+    examStarted, 
+    userAnswers, 
+    currentQuestionIndex, 
+    flaggedQuestions, 
+    timeLeft, 
+    examCompleted, 
+    examResult,
+    id,
+    updateExamProgress
+  ]);
+
+  // Start the exam
+  const handleStartExam = () => {
+    setExamStarted(true);
+    // Initialize timer if quiz has a time limit
+    if (quiz.limitTime) {
+      setTimeLeft(quiz.limitTime);
+    }
+    
+    // Start the exam in the store
+    startExam(id, quiz.limitTime);
+  };
+
+  // Clear saved progress
+  const clearSavedProgress = () => {
+    clearExamProgress(id);
+  };
+
+  // Handle timer countdown - only start when exam has started
+  useEffect(() => {
+    if (!timeLeft || !examStarted || examCompleted) return;
+    
+    const timer = setInterval(() => {
+      setTimeLeft(prevTime => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          submitExam();
+          return 0;
+        }
+        const newTime = prevTime - 1;
+        updateTimeLeft(id, newTime);
+        return newTime;
+      });
+    }, 1000);
+    
+    return () => clearInterval(timer);
+  }, [timeLeft, examStarted, examCompleted, id, updateTimeLeft]);
+
+  // Format time remaining
+  const formatTimeRemaining = () => {
+    if (!timeLeft) return '';
+    
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
+  // Handle answer selection
+  const handleAnswerSelect = (questionId, answer) => {
+    const updatedAnswers = {
+      ...userAnswers,
+      [questionId]: answer
+    };
+    setUserAnswers(updatedAnswers);
+    
+    // Update answer in the store
+    saveExamAnswer(id, questionId, answer);
+  };
+
+  // Navigate to previous question
+  const goToPreviousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
+  // Navigate to next question
+  const goToNextQuestion = () => {
+    if (currentQuestionIndex < quiz.questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  // Toggle flagged status for current question
+  const toggleFlagQuestion = (questionId) => {
+    const newFlagged = flaggedQuestions.includes(questionId)
+      ? flaggedQuestions.filter(id => id !== questionId)
+      : [...flaggedQuestions, questionId];
+      
+    setFlaggedQuestions(newFlagged);
+    
+    // Update in the store
+    toggleFlaggedQuestion(id, questionId);
+  };
+
+  // Jump to a specific question
+  const jumpToQuestion = (index) => {
+    setCurrentQuestionIndex(index);
+  };
+
+  // Submit the exam
+  const submitExam = () => {
+    if (examCompleted) return;
+    
+    // Calculate results
+    let correctAnswers = 0;
+    
+    quiz.questions.forEach(question => {
+      if (userAnswers[question.id] === question.correctAnswer) {
+        correctAnswers++;
+      }
+    });
+    
+    const score = Math.round((correctAnswers / quiz.questions.length) * 100);
+    
+    const resultData = {
+      score,
+      correctAnswers,
+      totalQuestions: quiz.questions.length
+    };
+    
+    setExamResult(resultData);
+    setExamCompleted(true);
+    
+    // Save to store immediately
+    completeExam(id, resultData);
+  };
+
+  // Ask for confirmation before leaving the page
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (!examCompleted && Object.keys(userAnswers).length > 0) {
+        e.preventDefault();
+        e.returnValue = '';
+        return '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [examCompleted, userAnswers]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-4">
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md max-w-lg w-full">
+          <div className="flex items-center">
+            <AlertTriangle className="h-6 w-6 text-red-500 mr-3" />
+            <h3 className="text-lg font-medium text-red-800">{t('error')}</h3>
+          </div>
+          <p className="mt-2 text-red-700">{error}</p>
+          <button 
+            onClick={() => router.back()} 
+            className="mt-4 px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors"
+          >
+            {t('goBack')}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!quiz) return null;
+
+  if (examCompleted) {
+    // Render exam results
+    return (
+      <div className="container mx-auto max-w-4xl p-4 my-8">
+        <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
+            <h1 className="text-2xl font-bold">{quiz.title}</h1>
+            <p className="opacity-90 mt-2">{quiz.description}</p>
+          </div>
+          
+          <div className="p-6">
+            <div className="mb-8 text-center">
+              <div className="inline-flex items-center justify-center p-4 bg-blue-50 rounded-full mb-4">
+                <CheckCircle2 className={`h-12 w-12 ${examResult.score >= 70 ? 'text-green-500' : 'text-orange-500'}`} />
+              </div>
+              <h2 className="text-3xl font-bold mb-2">{examResult.score}%</h2>
+              <p className="text-gray-600"> 
+                {t('correctAnswers')}: {examResult.correctAnswers} / {examResult.totalQuestions}
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              {quiz.questions.map((question, index) => {
+                const userAnswer = userAnswers[question.id];
+                const isCorrect = userAnswer === question.correctAnswer; 
+                
+                return (
+                  <div key={question.id} className="border rounded-lg p-4">
+                    <div className="flex justify-between mb-2">
+                      <h3 className="text-lg font-medium flex items-center">
+                        <span className="bg-gray-100 text-gray-800 w-7 h-7 rounded-full flex items-center justify-center mr-2 text-sm">
+                          {index + 1}
+                        </span>
+                        <span className="font-bold">{question.question}</span>
+                      </h3>
+                      {userAnswer && (
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                          {isCorrect ? t('correct') : t('incorrect')}
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-6">
+                      {Object.entries(question.options).map(([key, value]) => (
+                        <div key={key} className="flex items-start">
+                          <div className="flex items-center h-5">
+                            <input
+                              type="radio"
+                              readOnly
+                              checked={userAnswer === key}
+                              className={`h-4 w-4 border-gray-300 ${
+                                key === question.correctAnswer
+                                  ? 'text-green-600 focus:ring-green-500'
+                                  : userAnswer === key
+                                  ? 'text-red-600 focus:ring-red-500'
+                                  : 'text-blue-600 focus:ring-blue-500'
+                              }`}
+                            />
+                          </div>
+                          <label className={`ml-2 block text-sm ${
+                            key === question.correctAnswer
+                              ? 'text-green-700 font-medium'
+                              : userAnswer === key && userAnswer !== question.correctAnswer
+                              ? 'text-red-700'
+                              : 'text-gray-700'
+                          }`}>
+                            <span className="font-medium">{key}:</span> {value}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {isCorrect ? (
+                      <div className="mt-3 p-3 bg-green-50 text-green-800 text-sm rounded-md">
+                        <p className="font-bold mb-2">{t('explanation')}:</p>
+                        <p>{question.explanation}</p>
+                      </div>
+                    ) : (
+                      <div className="mt-3 p-3 bg-red-50 text-red-800 text-sm rounded-md">
+                        <p className="font-bold mb-2">{t('correctAnswer')}: {question.correctAnswer}</p>
+                        <p className="mt-1">{question.explanation}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            
+            <div className="mt-8 flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
+              {/* <button
+                onClick={() => router.back()}
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                {t('returnToDashboard')}
+              </button> */}
+              
+              <button
+                onClick={() => {
+                  clearSavedProgress();
+                  // reload page
+                  window.location.reload();
+                }}
+                className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                {t('tryAgain')}  
+              </button> 
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Render splash screen if exam hasn't started yet
+  if (!examStarted) {
+    return (
+      <div className="container mx-auto max-w-4xl p-4 my-10">
+        <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-8 text-white">
+            <h1 className="text-3xl font-bold">{quiz.title}</h1>
+            <p className="opacity-90 mt-3 text-lg">{quiz.description}</p>
+          </div>
+          
+          <div className="p-8">
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold mb-4">{t('examInstructions')}</h2>
+              
+              <div className="space-y-4 text-gray-700">
+                <div className="flex items-start">
+                  <div className="bg-blue-100 p-2 rounded-full mr-3">
+                    <CheckCircle2 className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <p>{t('totalQuestions')}: <span className="font-medium">{quiz.questions.length}</span></p>
+                </div>
+                
+                {quiz.limitTime && (
+                  <div className="flex items-start">
+                    <div className="bg-blue-100 p-2 rounded-full mr-3">
+                      <Timer className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <p>{t('timeLimit')}: <span className="font-medium">{Math.floor(quiz.limitTime / 60)} {t('minutes')}</span></p>
+                  </div>
+                )}
+                
+                <div className="flex items-start">
+                  <div className="bg-blue-100 p-2 rounded-full mr-3">
+                    <AlertTriangle className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <p>{t('cantChangeAnswers')}</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gray-50 p-4 rounded-lg mb-6 text-gray-700">
+              <p className="font-medium">{t('readyToStart')}</p>
+              <p className="text-sm mt-1">{t('clickStartWhenReady')}</p>
+            </div>
+            
+            <div className="text-center">
+              <button
+                onClick={handleStartExam}
+                className="px-8 py-3 bg-blue-600 text-white text-lg font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
+              >
+                {t('startExam')}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Current question being displayed
+  const currentQuestion = quiz.questions[currentQuestionIndex];
+
+  // Render exam interface
+  return (
+    <div className="container mx-auto max-w-5xl p-4 my-10">
+      {/* Quiz header */}
+      <div className="bg-white rounded-lg p-4 mb-4 border border-gray-200">
+        <h1 className="text-xl font-bold text-gray-900">{quiz.title}</h1>
+        <p className="text-gray-600 text-sm mt-1">{quiz.description}</p>
+        
+        {/* Timer and progress bar */}
+        <div className="flex justify-between items-center mt-4">
+          {timeLeft ? (
+            <div className="flex items-center text-sm font-medium">
+              <Timer className="w-4 h-4 mr-1 text-blue-600" />
+              <span className={`${timeLeft < 60 ? 'text-red-600 animate-pulse' : 'text-blue-600'}`}>
+                {formatTimeRemaining()}
+              </span>
+            </div>
+          ) : (
+            <div></div>
+          )}
+          <div className="text-sm text-gray-600">
+            {t('question')} {currentQuestionIndex + 1} {t('of')} {quiz.questions.length}
+          </div>
+        </div>
+        
+        <div className="w-full bg-gray-200 rounded-full h-1.5 mt-3">
+          <div 
+            className="bg-blue-600 h-1.5 rounded-full" 
+            style={{ width: `${((currentQuestionIndex + 1) / quiz.questions.length) * 100}%` }}
+          ></div>
+        </div>
+      </div>
+      
+      {/* Question card */}
+      <div className="bg-white rounded-lg shadow-lg p-6 mb-4 border border-gray-200">
+        <div className="flex justify-between items-start mb-6">
+          <h2 className="text-lg font-semibold text-gray-800 flex-1 pr-4">
+            <span className="inline-flex items-center justify-center bg-blue-600 text-white rounded-full w-6 h-6 mr-2 text-sm">
+              {currentQuestionIndex + 1}
+            </span>
+            {currentQuestion.question}
+          </h2>
+          
+          <button 
+            onClick={() => toggleFlagQuestion(currentQuestion.id)}
+            className={`p-2 rounded-full ${
+              flaggedQuestions.includes(currentQuestion.id)
+                ? 'bg-amber-100 text-amber-600 hover:bg-amber-200'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+            aria-label={t('flagQuestion')}
+          >
+            <Flag className="w-5 h-5" />
+          </button>
+        </div>
+        
+        <div className="space-y-3">
+          {Object.entries(currentQuestion.options).map(([key, value]) => (
+            <div 
+              key={key} 
+              onClick={() => handleAnswerSelect(currentQuestion.id, key)}
+              className={`p-4 rounded-lg border cursor-pointer transition-all ${
+                userAnswers[currentQuestion.id] === key
+                  ? 'bg-blue-50 border-blue-300 ring-2 ring-blue-300'
+                  : 'border-gray-200 hover:border-blue-200 hover:bg-blue-50/50'
+              }`}
+            >
+              <div className="flex items-center">
+                <div className="flex items-center h-5">
+                  <input
+                    id={`${currentQuestion.id}-${key}`}
+                    name={`question-${currentQuestion.id}`}
+                    type="radio"
+                    checked={userAnswers[currentQuestion.id] === key}
+                    onChange={() => handleAnswerSelect(currentQuestion.id, key)}
+                    className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                </div>
+                <label 
+                  htmlFor={`${currentQuestion.id}-${key}`}
+                  className="ml-3 block text-gray-800 cursor-pointer"
+                >
+                  <span className="font-medium">{key}:</span> {value}
+                </label>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Question navigation and submit buttons */}
+      <div className="flex justify-between mt-6">
+        <button
+          onClick={goToPreviousQuestion}
+          disabled={currentQuestionIndex === 0}
+          className={`px-4 py-2 flex items-center rounded-lg ${
+            currentQuestionIndex === 0
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+          }`}
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          {t('previous')}
+        </button>
+        
+        <div className="flex space-x-2">
+          {currentQuestionIndex === quiz.questions.length - 1 ? (
+            <button
+              onClick={submitExam}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center"
+            >
+              {t('submitExam')}
+              <CheckCircle className="w-4 h-4 ml-2" />
+            </button>
+          ) : (
+            <button
+              onClick={goToNextQuestion}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"
+            >
+              {t('next')}
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </button>
+          )}
+        </div>
+      </div>
+      
+      {/* Question list / navigation dots */}
+      <div className="mt-8 bg-white rounded-lg p-4 border border-gray-200">
+        <h3 className="text-sm font-medium text-gray-700 mb-3">{t('questionNavigation')}</h3>
+        <div className="flex flex-wrap gap-2">
+          {quiz.questions.map((question, index) => (
+            <button
+              key={question.id}
+              onClick={() => jumpToQuestion(index)}
+              className={`w-8 h-8 rounded-full text-xs font-medium flex items-center justify-center
+                ${currentQuestionIndex === index ? 'ring-2 ring-offset-2 ring-blue-500' : ''}
+                ${userAnswers[question.id] 
+                  ? 'bg-blue-600 text-white' 
+                  : flaggedQuestions.includes(question.id)
+                    ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                    : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                }
+              `}
+              aria-label={`${t('question')} ${index + 1}`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+        
+        <div className="flex items-center mt-4 text-xs text-gray-600 space-x-4">
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full bg-blue-600 mr-1"></div>
+            <span>{t('answered')}</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full bg-amber-100 border border-amber-300 mr-1"></div>
+            <span>{t('flaggedQuestions')}</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full bg-gray-100 border border-gray-300 mr-1"></div>
+            <span>{t('unanswered')}</span>
+          </div>
+        </div>
+      </div>
+      
+      {/* Submit button at bottom */}
+      <div className="text-center my-10">
+        <button
+          onClick={submitExam}
+          className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 inline-flex items-center"
+        >
+          {t('submitExam')}
+          <CheckCircle className="w-4 h-4 ml-2" />
+        </button>
+        <p className="text-sm text-gray-500 mt-2">
+          {t('cantChangeAnswers')}
+        </p>
+      </div>
+    </div>
+  );
+} 

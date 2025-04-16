@@ -5,9 +5,9 @@ import { useToast } from '@/components/Toast';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
  
-export default function QuizReview({ quiz, updateQuiz, saveQuiz }) {
+export default function QuizReview({ quiz, updateQuiz, saveQuiz, mode }) {
   const t = useTranslations('quizCreate');
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(mode === 'edit' ? true : false);
   const [editedQuiz, setEditedQuiz] = useState(quiz);
   const [editingQuestionId, setEditingQuestionId] = useState(null);
   const [isClient, setIsClient] = useState(false);
@@ -36,7 +36,10 @@ export default function QuizReview({ quiz, updateQuiz, saveQuiz }) {
   // Handler for saving changes
   const handleSaveChanges = () => {
     updateQuiz(editedQuiz);
-    setEditMode(false);
+
+    if (mode !== 'edit') {
+      setEditMode(false);
+    }
 
     toast.success(t('quizUpdatedSuccessfully'), 3000);
   };
@@ -161,35 +164,40 @@ export default function QuizReview({ quiz, updateQuiz, saveQuiz }) {
       </div>
 
       {/* Edit Mode Toggle Banner */}
-      <div className={`mb-4 p-3 rounded-lg flex justify-between items-center ${editMode ? 'bg-blue-50 border border-blue-200' : 'bg-gray-50 border border-gray-200'}`}>
-        <div className="flex items-center">
-          <div className={`w-3 h-3 rounded-full mr-2 ${editMode ? 'bg-blue-500' : 'bg-gray-400'}`}></div>
-          <span className={`font-medium text-xs ${editMode ? 'text-blue-700' : 'text-gray-700'}`}>
-            {editMode ? t('editModeOn') : t('editModeOff')}
-          </span>
-        </div>
-        <button 
-          type="button" 
-          onClick={toggleEditMode}
-          className={`px-4 py-2 text-xs rounded-lg transition-colors flex items-center ${
-            editMode 
-              ? 'bg-blue-100 text-blue-700 hover:bg-blue-200 border border-blue-300' 
-              : 'bg-orange-100 text-orange-800 hover:bg-orange-200 border-1 border-orange-300 font-semibold'
-          }`}
-        >
-          {editMode ? (
-            <>
-              <X className="w-4 h-4 mr-2" /> 
-              { t('exitEditMode') }
-            </>
-          ) : (
-            <>
-              <Edit className="w-4 h-4 mr-2" /> 
-              { t('editQuiz') }
-            </>
-          )}
-        </button>
-      </div>
+      {
+        mode !== 'edit' && <>
+          <div className={`mb-4 p-3 rounded-lg flex justify-between items-center ${editMode ? 'bg-blue-50 border border-blue-200' : 'bg-gray-50 border border-gray-200'}`}>
+            <div className="flex items-center">
+              <div className={`w-3 h-3 rounded-full mr-2 ${editMode ? 'bg-blue-500' : 'bg-gray-400'}`}></div>
+              <span className={`font-medium text-xs ${editMode ? 'text-blue-700' : 'text-gray-700'}`}>
+                {editMode ? t('editModeOn') : t('editModeOff')}
+              </span>
+            </div>
+            <button 
+              type="button" 
+              onClick={toggleEditMode}
+              className={`px-4 py-2 text-xs rounded-lg transition-colors flex items-center ${
+                editMode 
+                  ? 'bg-blue-100 text-blue-700 hover:bg-blue-200 border border-blue-300' 
+                  : 'bg-orange-100 text-orange-800 hover:bg-orange-200 border-1 border-orange-300 font-semibold'
+              }`}
+            >
+              {editMode ? (
+                <>
+                  <X className="w-4 h-4 mr-2" /> 
+                  { t('exitEditMode') }
+                </>
+              ) : (
+                <>
+                  <Edit className="w-4 h-4 mr-2" /> 
+                  { t('editQuiz') }
+                </>
+              )}
+            </button>
+          </div>
+        </>
+      
+      }
 
       <div className="flex justify-between items-center mb-6">
         <div className="flex-1">
@@ -428,22 +436,26 @@ export default function QuizReview({ quiz, updateQuiz, saveQuiz }) {
         <div className="container mx-auto max-w-[900px] flex flex-col sm:flex-row justify-between gap-3">
           {editMode ? (
             <>
-              <button 
-                type="button"
-                onClick={toggleEditMode}
-                className="w-full sm:w-auto px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center cursor-pointer text-xs"
-                aria-label="Cancel editing"
-              >
-                <span className="mr-2">
-                  <X className="w-4 h-4" />
-                </span>
-                Cancel
-              </button>
+              {
+                mode !== 'edit' && (
+                  <button 
+                    type="button"
+                    onClick={toggleEditMode}
+                    className="w-full sm:w-auto px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center cursor-pointer text-xs"
+                    aria-label="Cancel editing"
+                  >
+                    <span className="mr-2">
+                      <X className="w-4 h-4" />
+                    </span>
+                    Cancel
+                  </button>
+                )
+              }
 
               <button 
                 type="button"
                 onClick={handleSaveChanges}
-                className="w-full sm:w-auto px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center cursor-pointer text-xs"
+                className="w-full sm:w-auto px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center cursor-pointer text-xs ml-auto"
                 aria-label="Save changes"  
               >
                 <span className="mr-2">
