@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Space_Mono, Sono } from "next/font/google";
 import { useLocale } from 'next-intl';
 import { ToastProvider } from '@/components/Toast';
 import { ConfirmProvider } from '@/components/Confirm';
+import { ModalProvider } from '@/components/Modal';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,9 +39,11 @@ export default function RootLayout({ children }) {
     <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable} ${spaceMono.variable} ${sono.variable} antialiased`}>
         <ConfirmProvider>
-          <ToastProvider position="top-right">
-            {children}
-          </ToastProvider> 
+          <ModalProvider>
+            <ToastProvider position="top-right">
+              {children}
+            </ToastProvider> 
+          </ModalProvider>
         </ConfirmProvider>
       </body>
     </html>

@@ -21,6 +21,14 @@ export const useAuthStore = create(
         if (currentUser) {
           const token = await currentUser.getIdToken();
           nookies.set(undefined, 'token', token, { path: '/' });
+
+          // get redirectUrlAfterLogin from local storage
+          const redirectUrlAfterLogin = localStorage.getItem('redirectUrlAfterLogin');
+          if (redirectUrlAfterLogin) {
+            localStorage.removeItem('redirectUrlAfterLogin');
+            // window.location.href = redirectUrlAfterLogin;
+            window.location.href = redirectUrlAfterLogin;
+          }
         } else {
           nookies.destroy(undefined, 'token');
         }
@@ -40,6 +48,9 @@ export const useAuthStore = create(
     // logout
     logout: () => {
       logout();
+      
+      // redirect to home
+      window.location.href = '/';
     },
     
   }))

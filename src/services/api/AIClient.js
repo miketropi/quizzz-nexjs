@@ -128,10 +128,10 @@ export default class AIClient {
     - **Text**: ${prompt}
     - **Response Format**: Format the summary as a JSON object with the following structure:
     {
-      "topic": "Quiz topic of the text",
-      "language": "Vietnamese", // Language of the text
+      "topic": "Quiz topic of the text", // Quiz topic of the text and use language of the quiz
+      "language": "Vietnamese", // If it is a language test, choose the correct language type mentioned.
       "questionCount": 5, // Number of questions in the quiz
-      "difficulty": "Easy", // Difficulty of the quiz
+      "difficulty": "Easy", // Difficulty of the quiz  
     }
     `
     try {
@@ -186,13 +186,13 @@ Follow these guidelines:
     
     const __prompt = `
     Create a quiz of multiple-choice questions on the topic of "${topic}".
-    - **Number of Questions**: ${ questionCount >= 10 ? 10 : questionCount }.
+    - **Number of Questions**: ${ questionCount >= 25 ? 25 : questionCount }.
     - **Language Detection**: ${ language }.
     - **Difficulty Level**: ${ difficulty }.
     - **Response Format**: Format the quiz as a JSON object with the following structure:
     {
-      "title": "Quiz title here",
-      "description": "Brief description of the quiz",
+      "title": "Quiz title here", // Quiz title here and use language of the quiz
+      "description": "Brief description of the quiz", // Brief description of the quiz use language of the quiz
       "questions": [
         {
           "id": "0e66df44", // Unique random ID for the question
@@ -200,7 +200,7 @@ Follow these guidelines:
           "options": { "A": "Option A", "B": "Option B", "C": "Option C", "D": "Option D" },
           "correctAnswer": "A", // Key of the correct answer in the options object
           "explanation": "Explanation of the correct answer"
-        }
+        } 
       ]
     }`
     

@@ -1,17 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { login, signup, loginWithGoogle, loginWithGithub } from '../services/auth';
 
-export default function LoginForm({ isSignUpDefault = false }) {
+export default function LoginForm({ isSignUpDefault = false, redirectUrlAfterLogin = '/' }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(isSignUpDefault);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    // save redirectUrlAfterLogin to local storage
+    localStorage.setItem('redirectUrlAfterLogin', redirectUrlAfterLogin);
+  }, [redirectUrlAfterLogin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +32,7 @@ export default function LoginForm({ isSignUpDefault = false }) {
         setError(result.error);
       } else {
         // Successfully logged in or signed up, redirect to home
-        router.push('/');
+        router.push(redirectUrlAfterLogin);
       }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
@@ -68,7 +73,7 @@ export default function LoginForm({ isSignUpDefault = false }) {
         </div>
       )}
       
-      <form className="space-y-6" onSubmit={handleSubmit}>
+      <form className="space-y-6 hidden" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email address
@@ -122,7 +127,7 @@ export default function LoginForm({ isSignUpDefault = false }) {
             <div className="w-full border-t border-gray-300" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">Or continue with</span>
+            <span className="px-2 bg-white text-gray-500">login with social</span>
           </div>
         </div>
 
@@ -131,7 +136,7 @@ export default function LoginForm({ isSignUpDefault = false }) {
             type="button"
             onClick={() => handleSocialLogin('google')}
             disabled={loading}
-            className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 pointer-events-none opacity-30"
           >
             <svg className="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
