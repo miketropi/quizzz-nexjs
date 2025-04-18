@@ -13,6 +13,7 @@ import Loader from '@/components/dashboard/Loader';
 import quizService from '@/services/quizService';
 import userService from '@/services/userService';
 import { useConfirm } from '@/components/Confirm';
+import SubmissionsTab from '@/components/dashboard/SubmissionsTab';
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -21,6 +22,7 @@ export default function DashboardPage() {
   const [userProfile, setUserProfile] = useState(null);
   const [activeTab, setActiveTab] = useState('quizzes');
   const confirm = useConfirm();
+
   useEffect(() => {
     const fetchUserData = async () => {
       if (user) {
@@ -66,6 +68,11 @@ export default function DashboardPage() {
                 <QuizzesTab 
                   userQuizzes={userQuizzes}
                 />
+              )}
+
+              {/* Submissions Tab */}
+              {activeTab === 'submissions' && (
+                <SubmissionsTab />
               )}
               
               {/* Activity Tab */}

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
-import { subscribeToAuthChanges, logout } from '../services/auth'
+import { subscribeToAuthChanges, logout, subscribeToIdTokenChanges } from '../services/auth'
 import nookies from 'nookies';
 
 /**
@@ -39,7 +39,19 @@ export const useAuthStore = create(
         });
       });
 
-      return unsubscribe;
+      
+      // subscribe to id token changes
+      const unsubscribeIdToken = subscribeToIdTokenChanges(async (user) => {
+        if (user) {
+          const token = await user.getIdToken();
+          nookies.set(undefined, 'token', token, { path: '/' });
+        } else {
+          nookies.destroy(undefined, 'token');
+        }
+      })
+      
+
+      return { unsubscribe, unsubscribeIdToken };
     },
 
     // Computed getters
@@ -48,7 +60,7 @@ export const useAuthStore = create(
     // logout
     logout: () => {
       logout();
-      
+
       // redirect to home
       window.location.href = '/';
     },
@@ -57,16 +69,19 @@ export const useAuthStore = create(
 );
 
 // Initialize auth listener when this module is imported
-let unsubscribeAuth;
-
+let __unsubscribe;
+let __unsubscribeIdToken;
 // Only run in browser environment
 if (typeof window !== 'undefined') {
-  unsubscribeAuth = useAuthStore.getState().initAuth();
+  const { unsubscribe, unsubscribeIdToken } = await useAuthStore.getState().initAuth();
+  __unsubscribe = unsubscribe;
+  __unsubscribeIdToken = unsubscribeIdToken;
 }
 
 // Handle cleanup for hot module replacement in development
 if (process.env.NODE_ENV === 'development' && module.hot) {
   module.hot.dispose(() => {
-    if (unsubscribeAuth) unsubscribeAuth();
+    if (__unsubscribe) __unsubscribe();
+    if (__unsubscribeIdToken) __unsubscribeIdToken();
   });
 } 

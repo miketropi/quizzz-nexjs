@@ -20,16 +20,16 @@
     "title": "Tính Năng",
     "items": {
       "1": {
-        "title": "Nhiều Danh Mục",
-        "description": "Khám phá các bài trắc nghiệm về nhiều chủ đề khác nhau"
+        "title": "Nhiều Danh Mục 📚",
+        "description": "Khám phá hàng trăm bài trắc nghiệm hấp dẫn về vô số chủ đề khác nhau từ khoa học 🔬, lịch sử 🏛️, văn học 📖 đến công nghệ 💻 và giải trí 🎮!"
       },
       "2": {
-        "title": "Kết Quả Thời Gian Thực",
-        "description": "Nhận phản hồi ngay lập tức về câu trả lời của bạn"
+        "title": "Kết Quả Thời Gian Thực ⚡",
+        "description": "Nhận phản hồi ngay lập tức về câu trả lời của bạn với phân tích chi tiết và gợi ý học tập thông minh 🧠. Không cần chờ đợi, kết quả hiển thị tức thì! 🚀"
       },
       "3": {
-        "title": "Thách Đấu Bạn Bè",
-        "description": "Thi đấu với bạn bè và theo dõi tiến trình của bạn"
+        "title": "Thách Đấu Bạn Bè 🏆",
+        "description": "Tạo phòng thi đấu vui nhộn 🎮, mời bạn bè tham gia, so tài trí tuệ và theo dõi bảng xếp hạng đầy cạnh tranh 📊. Ai sẽ là người chiến thắng hôm nay? 🥇"
       }
     }
   },
@@ -167,8 +167,16 @@
     "confirmBulkStatusUpdate": "Cập Nhật Trạng Thái",
     "confirmBulkStatusUpdateDesc": "Bạn có chắc chắn muốn cập nhật trạng thái của các trắc nghiệm đã chọn không?",
     "edit": "Chỉnh Sửa",
+    "yourSubmissions": "Bài Kiểm Tra Đã Nộp",
+    "score": "Điểm",
+    "submittedAt": "Ngày Nộp",
+    "viewDetails": "Xem Chi Tiết",
+    "noSubmissions": "Không có bài kiểm tra thực hiện",
+    "tryQuiz": "Thử Lại",
+    "quizName": "Tiêu Đề Trắc Nghiệm",
     "tabs": {
-      "quizzes": "Trắc Nghiệm",
+      "quizzes": "Đề Trắc Nghiệm",
+      "submissions": "Bài Kiểm Tra Thực Hiện",
       "activity": "Hoạt Động",
       "profile": "Hồ Sơ",
       "settings": "Cài Đặt"

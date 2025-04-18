@@ -200,7 +200,11 @@ export default function ExamClientPage({ quizData, id }) {
     const resultData = {
       score,
       correctAnswers,
-      totalQuestions: quiz.questions.length
+      totalQuestions: quiz.questions.length,
+
+      // quiz data and user answers
+      quizData: quiz,
+      userAnswers: userAnswers 
     };
     
     setExamResult(resultData);

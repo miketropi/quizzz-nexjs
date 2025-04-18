@@ -3,6 +3,10 @@ import { immer } from 'zustand/middleware/immer'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import quizService from '@/services/quizService'
 import { useAuthStore } from '@/store'
+
+// import submitted service
+import { submittedService } from '@/services'
+
 /**
  * Quiz-specific store using Zustand with Immer
  * Manages quiz generation, questions, answers, and user interactions
@@ -193,10 +197,34 @@ export const useQuizStore = create(
       }),
       
       completeExam: (quizId, resultData) => set((state) => {
-        if (!state.examState[quizId]) return
-        
+        if (!state.examState[quizId]) return;
+
         state.examState[quizId].completed = true
         state.examState[quizId].result = resultData
+
+        // get user
+        const { user } = useAuthStore.getState()
+
+        // save submitted quiz to firestore
+        const submittedQuiz = {
+          quizId,
+          // quizRef: quizService.getQuizRefById(quizId),
+          result: resultData,
+          userId: user.uid,
+        }
+
+        try {
+          // save submitted quiz to firestore
+          submittedService.createSubmission(submittedQuiz).then( async (submitted) => {
+            // update quizRef to submission
+            const quizRef = await quizService.getQuizRefById(quizId)
+            submittedService.updateSubmission(submitted.id, {
+              quizRef: quizRef
+            })
+          });
+        } catch (error) {
+          console.error('Error saving submitted quiz to firestore', error)
+        }
       }),
       
       clearExamProgress: (quizId) => set((state) => {

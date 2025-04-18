@@ -37,6 +37,11 @@ class QuizService {
     });
   }
 
+  // get ref of quiz by id
+  async getQuizRefById(quizId) {
+    return this.api.getRefById(quizId);
+  }
+
   /**
    * Get a quiz by ID
    * @param {string} quizId - Quiz ID

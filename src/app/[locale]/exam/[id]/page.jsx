@@ -51,6 +51,7 @@ export default async function ExamServerPage(context) {
 
     // check if user is logged in  
     const decodedToken = await admin.auth().verifyIdToken(token); 
+    
     const user = await admin.auth().getUser(decodedToken.uid);
 
     // check if user is logged in 

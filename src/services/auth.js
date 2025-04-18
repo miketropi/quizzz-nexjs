@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  onIdTokenChanged,
   GoogleAuthProvider,
   GithubAuthProvider,
   signInWithPopup
@@ -60,4 +61,12 @@ export const logout = async () => {
 
 export const subscribeToAuthChanges = (callback) => {
   return onAuthStateChanged(auth, callback);
+}; 
+
+export const subscribeToIdTokenChanges = (callback) => {
+  return onIdTokenChanged(auth, callback);
+}; 
+
+export const getCurrentUser = () => {
+  return auth.currentUser;
 }; 

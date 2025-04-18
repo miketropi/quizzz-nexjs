@@ -226,4 +226,9 @@ export default class FirestoreApi {
     await deleteDoc(docRef);
     return { id: docId, deleted: true };
   }
+
+  // get ref of document by id
+  async getRefById(docId, collectionPath = this.collectionName) {
+    return doc(db, collectionPath, docId);
+  }
 } 

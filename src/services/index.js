@@ -7,3 +7,4 @@ export * from './auth';
 // Export specific services
 export { default as quizService } from './quizService';
 export { default as userService } from './userService'; 
+export { default as submittedService } from './submittedService';
