@@ -134,7 +134,7 @@ export default function Home() {
                     />
                   ))}
                 </div>
-                <p className="text-gray-700 mb-4">"{item.quote}"</p>
+                <p className="text-gray-700 mb-4">&quot;{item.quote}&quot;</p>
                 <div className="mt-auto">
                   <p className="font-medium text-gray-900">{item.name}</p>
                   <p className="text-sm text-gray-500">{item.role}</p>

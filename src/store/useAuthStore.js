@@ -73,9 +73,10 @@ let __unsubscribe;
 let __unsubscribeIdToken;
 // Only run in browser environment
 if (typeof window !== 'undefined') {
-  const { unsubscribe, unsubscribeIdToken } = await useAuthStore.getState().initAuth();
-  __unsubscribe = unsubscribe;
-  __unsubscribeIdToken = unsubscribeIdToken;
+  useAuthStore.getState().initAuth().then(({ unsubscribe, unsubscribeIdToken }) => {
+    __unsubscribe = unsubscribe;
+    __unsubscribeIdToken = unsubscribeIdToken;
+  });
 }
 
 // Handle cleanup for hot module replacement in development
