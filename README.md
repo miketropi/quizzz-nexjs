@@ -4,7 +4,22 @@
 
 Quizzz is a Next.js application that leverages AI to generate custom quiz questions. Users can input a prompt, and the AI will render quiz content, providing an efficient and interactive way to create educational or engaging content.
 
-## Demo
+## Live Demo
+
+Experience Quizzz in action at [https://quizzz-nexjs.fly.dev](https://quizzz-nexjs.fly.dev)
+
+## Key Features
+
+- **AI-Powered Quiz Generation**: Create custom quizzes with just a prompt
+- **Multiple Question Types**: Support for multiple-choice, true/false, and more
+- **User Authentication**: Secure login and user-specific quiz management
+- **Quiz Sharing**: Public and private quiz options
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Internationalization**: Multi-language support
+- **Real-time Feedback**: Instant scoring and performance analytics
+
+
+## Preview Images
 
 ![Quizzz App Preview](https://github.com/miketropi/quizzz-nexjs/blob/master/image-preview/1.jpeg?raw=true)
 ![Quizzz App Preview](https://github.com/miketropi/quizzz-nexjs/blob/master/image-preview/2.jpeg?raw=true)
