@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import LoginForm from '@/components/LoginForm';
 import { useAuthStore } from '@/store';
 
-export default function ModalLogin() {
+export default function ModalLogin({ closeClickOutside = false }) {
   const modal = useModal();
   const { user } = useAuthStore();
 
@@ -19,7 +19,7 @@ export default function ModalLogin() {
       title: 'Login',
       content: <LoginForm redirectUrlAfterLogin={currentUrl} />,
       size: 'md',
-      closeOnClickOutside: false,
+      closeOnClickOutside: closeClickOutside,
       showCloseButton: false,
     });
 

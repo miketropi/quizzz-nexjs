@@ -127,8 +127,8 @@ export const useQuizStore = create(
         const quizToSave = editedQuiz || get().quiz
         const { user } = useAuthStore.getState()
         const quiz = await quizService.createQuiz({...quizToSave, userId: user.uid})
-
-        console.log('Quiz saved to firestore', quiz)
+        return quiz;
+        // console.log('Quiz saved to firestore', quiz)
       },
       
       deleteQuizFromHistory: (quizId) => set((state) => {

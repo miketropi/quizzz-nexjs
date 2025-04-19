@@ -4,6 +4,7 @@ import ModalLogin from './ModalLogin';
 // nextjs cookies
 import { cookies } from 'next/headers';
 import admin from '@/firebase-admin';
+
 // get quiz data from API endpoint instead of directly from Firebase
 const getQuizData = async (id) => {
   try {

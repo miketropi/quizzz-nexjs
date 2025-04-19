@@ -58,7 +58,7 @@ export default function Header() {
           <ul className="flex space-x-6 items-center">
             <li><Link href={`/${locale}`} className="text-sm hover:text-blue-600 transition-colors">{t('nav.home')}</Link></li>
             <li><Link href={`/${locale}/about`} className="text-sm hover:text-blue-600 transition-colors">{t('nav.about')}</Link></li>
-            <li><Link href={`/${locale}/quizzes`} className="text-sm hover:text-blue-600 transition-colors">{t('nav.quizzes')}</Link></li>
+            {/* <li><Link href={`/${locale}/quizzes`} className="text-sm hover:text-blue-600 transition-colors">{t('nav.quizzes')}</Link></li> */}
             
             {!loading && (
               <>

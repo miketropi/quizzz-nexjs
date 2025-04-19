@@ -488,7 +488,7 @@ export default function QuizReview({ quiz, updateQuiz, saveQuiz, mode }) {
                   saveQuiz();
 
                   // redirect to dashboard page
-                  router.push(`/${locale}/dashboard`);
+                  // router.push(`/${locale}/dashboard`);
                 }}
                 className="w-full sm:w-auto px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center cursor-pointer text-xs font-bold"
                 aria-label="Use this quiz data"  

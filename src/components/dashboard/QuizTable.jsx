@@ -182,10 +182,11 @@ export default function QuizTable() {
                     <div className="flex items-center gap-2">
                       <Link 
                         href={`/${locale}/exam/${quiz.id}`}
-                        className="p-1.5 rounded-full bg-green-50 text-green-600 hover:bg-green-100 transition-colors duration-200 flex items-center justify-center"
+                        className="p-1.5 rounded-full bg-green-50 text-green-600 hover:bg-green-100 transition-colors duration-200 flex items-center justify-center gap-1 border border-green-200"
                         aria-label={t('dashboard.takeExam', 'Take Exam')}
                         title={t('dashboard.takeExam', 'Take Exam')}
                       >
+                        <span className="text-xs">{t('dashboard.takeExam', 'Take Exam')}</span>
                         <Play className="w-4 h-4" />
                       </Link>
                       <Link 

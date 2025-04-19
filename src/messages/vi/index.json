@@ -14,7 +14,19 @@
     "title": "Tạo Trắc Nghiệm",
     "placeholder": "Nhập chủ đề cho bài trắc nghiệm của bạn (ví dụ: 'Hệ Mặt Trời', 'Chiến Tranh Thế Giới Thứ II')",
     "generating": "Đang tạo trắc nghiệm...",
-    "quizGeneratedSuccess": "Trắc Nghiệm Đã Được Tạo Thành Công"
+    "quizGeneratedSuccess": "Trắc Nghiệm Đã Được Tạo Thành Công",
+    "help": "Trợ Giúp", 
+    "helpTitle": "Cách Tạo Trắc Nghiệm",
+    "helpDescription": "Tạo trắc nghiệm dễ dàng với các tham số sau:",
+    "number": "Số Câu Hỏi",
+    "numberHelp": "Nhập số câu hỏi bạn muốn tạo (tối đa 25 câu)",
+    "topic": "Chủ Đề",
+    "topicHelp": "Nhập chủ đề trắc nghiệm",
+    "difficulty": "Độ Khó",
+    "difficultyHelp": "Nhập độ khó của trắc nghiệm (dễ, trung bình, khó)",
+    "example": "Ví Dụ",
+    "exampleTitle": "Ví Dụ",
+    "exampleDescription": "Tạo 10 câu hỏi về năng lượng tái tạo, độ khó trung bình."
   },
   "features": {
     "title": "Tính Năng",

@@ -3,8 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { useQuizStore } from '@/store';
 import { useTranslations, useLocale } from 'next-intl';
-import { Bot } from 'lucide-react';
+import { Bot, HelpCircle } from 'lucide-react';
 import { useToast } from '@/components/Toast';
+import { useModal } from '@/components/Modal';
 
 export default function QuizGeneratorForm() {
   const t = useTranslations('quizForm');
@@ -15,6 +16,8 @@ export default function QuizGeneratorForm() {
   const isGenerating = useQuizStore(state => state.isGenerating);
   const generateQuiz = useQuizStore(state => state.generateQuiz);
   const toast = useToast();
+  const modal = useModal();
+
   const handleGenerateQuiz = async (e) => {
     e.preventDefault();
     
@@ -30,9 +33,45 @@ export default function QuizGeneratorForm() {
     router.push(`/${locale}/quiz-create`);
   };
 
+  const onClickHelp = () => {
+    modal.open({
+      title: 'Help',
+      content: (
+        <div className="space-y-4">
+          <p className="text-gray-700 dark:text-gray-300">
+            { t('help') ?? 'Create an effective quiz by including these key parameters in your prompt:' }
+          </p>
+          <ul className="space-y-3">
+            <li className="flex items-start">
+              <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 font-medium rounded-full px-2.5 py-0.5 text-xs mr-2 mt-0.5 whitespace-nowrap">{ t('number') ?? 'Number' }</span>
+              <span className="text-gray-700 dark:text-gray-300">{ t('numberHelp') ?? 'Specify how many questions you want (maximum 25)' }</span>
+            </li>
+            <li className="flex items-start">
+              <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-medium rounded-full px-2.5 py-0.5 text-xs mr-2 mt-0.5 whitespace-nowrap">{ t('topic') ?? 'Topic' }</span>
+              <span className="text-gray-700 dark:text-gray-300">{ t('topicHelp') ?? 'Define the subject area for your quiz' }</span>
+            </li>
+            <li className="flex items-start">
+              <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 font-medium rounded-full px-2.5 py-0.5 text-xs mr-2 mt-0.5 whitespace-nowrap">{ t('difficulty') ?? 'Difficulty' }</span>
+              <span className="text-gray-700 dark:text-gray-300">{ t('difficultyHelp') ?? 'Set the challenge level (e.g., easy, medium, hard)' }</span>
+            </li>
+          </ul>
+          <div className="mt-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+            <p className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">{ t('exampleTitle') ?? 'Example:' }</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+              { t('exampleDescription') ?? 'Create 10 questions about renewable energy sources, medium difficulty.' }
+            </p>
+          </div>
+        </div>
+      ),
+      size: 'md',
+      closeOnClickOutside: true,
+      showCloseButton: false,
+    });
+  }
+
   return (
     <form onSubmit={handleGenerateQuiz} className="w-full mx-auto">
-      <div className="mb-4">
+      <div className="mb-4 relative">
         <textarea 
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
@@ -48,6 +87,15 @@ export default function QuizGeneratorForm() {
           rows={4}
           style={{ resize: "vertical" }}
         ></textarea>
+
+        {/** help icon on the bottom right, background color is blue and icon is white */}
+        <button 
+          type="button" 
+          className="absolute bottom-4 right-2 text-gray-500 hover:text-gray-700 bg-blue-600 rounded-full p-2 cursor-pointer"
+          onClick={onClickHelp} 
+        >
+          <HelpCircle className="w-5 h-5 text-white" />
+        </button>
       </div>
       <div className="flex justify-center sm:justify-end">
         <button
