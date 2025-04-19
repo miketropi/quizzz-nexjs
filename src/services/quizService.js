@@ -125,6 +125,11 @@ class QuizService {
     
     return this.api.query(filters, { limitCount: limit });
   }
+
+  // get quiz by ref
+  async getQuizByRef(ref) {
+    return this.api.getDocByRef(ref);
+  }
 }
 
 // Export a singleton instance

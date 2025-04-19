@@ -231,4 +231,11 @@ export default class FirestoreApi {
   async getRefById(docId, collectionPath = this.collectionName) {
     return doc(db, collectionPath, docId);
   }
+  
+  // get doc by ref
+  async getDocByRef(ref) {
+    const docSnap = await getDoc(ref);
+    return docSnap.data();
+  }
 } 
+
