@@ -6,7 +6,11 @@ Quizzz is a Next.js application that leverages AI to generate custom quiz questi
 
 ## Demo
 
-![Quizzz App Preview](https://github.com/yourusername/quizzz-nexjs/raw/main/public/app-preview.png)
+![Quizzz App Preview](https://github.com/miketropi/quizzz-nexjs/blob/master/image-preview/1.jpeg?raw=true)
+![Quizzz App Preview](https://github.com/miketropi/quizzz-nexjs/blob/master/image-preview/2.jpeg?raw=true)
+![Quizzz App Preview](https://github.com/miketropi/quizzz-nexjs/blob/master/image-preview/3.jpeg?raw=true)
+![Quizzz App Preview](https://github.com/miketropi/quizzz-nexjs/blob/master/image-preview/4.jpeg?raw=true)
+![Quizzz App Preview](https://github.com/miketropi/quizzz-nexjs/blob/master/image-preview/5.jpeg?raw=true)
 
 *AI-powered quiz generation with a clean, modern interface*
 
