@@ -67,7 +67,8 @@ export const useQuizStore = create(
             },
             body: JSON.stringify({ 
               prompt,
-              model: 'deepseek-chat',
+              // model: 'deepseek-chat', // DeepSeek model
+              model: 'gpt-4o-mini', // OpenAI model
               options: {
                 response_format: {
                   type: "json_object"

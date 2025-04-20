@@ -113,9 +113,9 @@ function SubmissionsTable({ submissions }) {
               <tr key={submission.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 w-1/2">
                   <div className="text-sm font-medium text-gray-900">
-                    <Link href={`/${locale}/quizzes/${submission.quizRef.id}`} className="font-semibold hover:text-blue-600">
+                    <h4 className="font-semibold">
                       {submission.quizTitle || 'Unknown Quiz'}
-                    </Link>
+                    </h4>
                   </div>
                 </td>
                 <td className="px-6 py-4">

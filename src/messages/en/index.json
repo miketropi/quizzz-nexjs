@@ -5,72 +5,71 @@
   },
   "hero": {
     "title": "Create a Test in Seconds",
-    "subtitle": "Leverage the power of AI to create interactive quizzes from simple requests. Perfect for teachers, content creators, and curious minds.",
+    "subtitle": "✨ Leverage the power of AI to create interactive quiz content from simple requests. 🚀 Perfect for teachers 👩‍🏫, content creators 🎨, and curious minds 🧠💭.",
     "cta": "Start Now",
-    "placeholder": "Enter a topic for your quiz (e.g., 'Solar System', 'World War II')"
+    "placeholder": "Enter a topic for your quiz (e.g., 'Solar System', 'World War II')",
+    "try_again": "Try Again"
+  },
+  "quizForm": {
+    "title": "Create Quiz",
+    "placeholder": "Enter a topic for your quiz (e.g., 'Solar System', 'World War II')",
+    "generating": "Generating quiz...",
+    "quizGeneratedSuccess": "Quiz Generated Successfully",
+    "help": "Help",
+    "helpTitle": "How to Create a Quiz",
+    "helpDescription": "Create a quiz easily with these parameters:",
+    "number": "Number of Questions",
+    "numberHelp": "Enter the number of questions you want to generate (maximum 25 questions)",
+    "topic": "Topic",
+    "topicHelp": "Enter the quiz topic",
+    "difficulty": "Difficulty",
+    "difficultyHelp": "Enter the difficulty level of the quiz (easy, medium, hard)",
+    "example": "Example",
+    "exampleTitle": "Example",
+    "exampleDescription": "Generate 10 questions about renewable energy, medium difficulty."
   },
   "features": {
     "title": "Features",
     "items": {
       "1": {
-        "title": "Diverse Categories",
-        "description": "Explore quizzes across various topics"
+        "title": "Diverse Categories 📚",
+        "description": "Explore hundreds of engaging quizzes on countless topics from science 🔬, history 🏛️, literature 📖 to technology 💻 and entertainment 🎮!"
       },
       "2": {
-        "title": "Real-time Results",
-        "description": "Get instant feedback on your answers"
+        "title": "Real-time Results ⚡",
+        "description": "Get instant feedback on your answers with detailed analysis and smart learning suggestions 🧠. No waiting, results appear instantly! 🚀"
       },
       "3": {
-        "title": "Challenge Friends",
-        "description": "Compete with your friends and track your progress"
+        "title": "Challenge Friends 🏆",
+        "description": "Create fun competition rooms 🎮, invite friends to join, compete intellectually and track the competitive leaderboard 📊. Who will win today? 🥇"
       }
     }
   },
   "quiz": {
     "title": "Quiz",
     "loading": "Your quiz is loading...",
-    "back": "Back to Home"
-  },
-  "nav": {
-    "home": "Home",
-    "about": "About",
-    "quizzes": "Quizzes",
-    "profile": "Profile",
-    "login": "Login",
-    "signup": "Sign Up",
-    "logout": "Logout"
-  },
-  "footer": {
-    "terms": "Terms",
-    "privacy": "Privacy",
-    "contact": "Contact"
-  },
-  "dashboard": {
-    "title": "Dashboard",
-    "welcome": "Welcome back",
-    "tabs": {
-      "quizzes": "My Quizzes",
-      "activity": "Activity",
-      "profile": "Profile",
-      "settings": "Settings"
-    },
-    "yourQuizzes": "Your Quizzes",
-    "createQuiz": "Create Quiz",
-    "noQuizzes": "No quizzes yet",
-    "startCreating": "Start creating your first quiz",
-    "questions": "questions",
-    "view": "View Quiz",
-    "delete": "Delete",
-    "takeExam": "Take Exam",
-    "confirmDelete": "Are you sure you want to delete this quiz?",
-    "recentActivity": "Recent Activity",
-    "activityComingSoon": "Activity tracking coming soon",
-    "profileInfo": "Profile Information",
-    "email": "Email",
-    "userId": "User ID",
-    "accountCreated": "Account Created",
-    "accountSettings": "Account Settings",
-    "settingsComingSoon": "Account settings coming soon"
+    "back": "Back to Home",
+    "error": "An error occurred while loading the quiz",
+    "questions": "Questions",
+    "answers": "Answers",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "results": "Results",
+    "total": "Total",
+    "correctAnswers": "Correct Answers",
+    "incorrectAnswers": "Incorrect Answers",
+    "percentage": "Percentage",
+    "share": "Share",
+    "shareMessage": "Check out my quiz results: {url}",
+    "shareTitle": "My Quiz Results",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "submit": "Submit",
+    "review": "Review",
+    "reviewTitle": "Quiz Review",
+    "showExplanation": "Show Explanation",
+    "noQuiz": "No quiz found"
   },
   "exam": {
     "title": "Exam",
@@ -96,6 +95,114 @@
     "correct": "Correct",
     "incorrect": "Incorrect",
     "correctAnswer": "Correct Answer",
-    "returnToDashboard": "Return to Dashboard"
+    "returnToDashboard": "Return to Dashboard",
+    "totalQuestions": "Total Questions",
+    "timeLimit": "Time Limit",
+    "minutes": "Minutes",
+    "readyToStart": "Ready to Start",
+    "clickStartWhenReady": "Click Start When Ready",
+    "startExam": "Start Exam",
+    "examInstructions": "Exam Instructions",
+    "clearProgressAndReturn": "Clear Progress and Return",
+    "clearProgressAndTryAgain": "Clear Progress and Try Again",
+    "tryAgain": "Try Again"
+  },
+  "quizCreate": {
+    "title": "Create Quiz",
+    "questions": "Questions",
+    "useQuiz": "Use Quiz Data",
+    "description": "<p>✨ Enter an interesting topic for your quiz (e.g., <strong>'Solar System 🪐'</strong>, <strong>'Wildlife 🦁'</strong>) and click <strong>'Create Quiz'</strong> to start the magic!</p><p>🚀 In just seconds, you'll have an amazing quiz for fun learning, challenging your brain 🧠 or sharing with friends for an exciting knowledge adventure!</p><p>🎮 Get ready to learn while playing, play while learning! 🎉</p>",
+    "explanation": "Explanation",
+    "createAnotherQuiz": "Create Another Quiz",
+    "useThisQuizData": "Use This Quiz Data",
+    "editQuiz": "Edit Quiz",
+    "exitEditMode": "Exit Edit Mode",
+    "editModeOn": "Edit Mode: ON",
+    "editModeOff": "Edit Mode: OFF",
+    "editModeDocumentTitle": "Quiz Edit Instructions",
+    "editModeDocument": "🎮 Hey! ✏️ Here, you can enable customization mode for quiz titles and descriptions as you like. 🔄 Feel free to get creative by editing, adding, deleting, or rearranging questions easily! 🎯 Adjust answer options, change correct answers, and enrich your explanations. ✨ When you've completed your masterpiece, click <strong>Save Changes</strong> to save your work! 🚀",
+    "quizUpdatedSuccessfully": "Quiz Updated Successfully",
+    "backToDashboard": "Back to Dashboard",
+    "quizSavedSuccessfully": "Quiz Saved Successfully"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "quizzes": "Quizzes",
+    "profile": "Profile",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "contact": "Contact"
+  },
+  "footer": {
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "contact": "Contact"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Hi",
+    "quizzes": "Quizzes",
+    "activity": "Activity",
+    "profile": "Profile",
+    "settings": "Settings",
+    "confirmDelete": "Are you sure you want to delete this quiz?",
+    "yourQuizzes": "Your Quizzes",
+    "noQuizzes": "No quizzes found",
+    "startCreating": "Start creating your quiz",
+    "createQuiz": "Create Quiz",
+    "activityComingSoon": "Activity coming soon",
+    "recentActivity": "Recent Activity",
+    "profileInfo": "Profile Information",
+    "email": "Email",
+    "userId": "User ID",
+    "accountCreated": "Account Created On",
+    "accountSettings": "Account Settings",
+    "settingsComingSoon": "Settings coming soon",
+    "view": "View",
+    "delete": "Delete",
+    "takeExam": "Take Exam",
+    "questions": "Questions",
+    "quizTitle": "Quiz Title",
+    "description": "Description",
+    "date": "Date",
+    "actions": "Actions",
+    "status": "Status",
+    "timeLimit": "Time Limit",
+    "noLimit": "No Limit",
+    "confirmBulkDelete": "Delete Multiple Quizzes",
+    "confirmBulkDeleteDesc": "Are you sure you want to delete the selected quizzes?",
+    "deleteSelected": "Delete Selected Quizzes",
+    "makePublic": "Make Public",
+    "makePrivate": "Make Private",
+    "confirmBulkStatusUpdate": "Update Status",
+    "confirmBulkStatusUpdateDesc": "Are you sure you want to update the status of the selected quizzes?",
+    "edit": "Edit",
+    "yourSubmissions": "Your Submissions",
+    "score": "Score",
+    "submittedAt": "Submitted At",
+    "viewDetails": "View Details",
+    "noSubmissions": "No submissions found",
+    "tryQuiz": "Try Again",
+    "quizName": "Quiz Title",
+    "tabs": {
+      "quizzes": "My Quizzes",
+      "submissions": "Submissions",
+      "activity": "Activity",
+      "profile": "Profile",
+      "settings": "Settings"
+    }
+  },
+  "submission": {
+    "backToDashboard": "Back to Dashboard",
+    "score": "Score",
+    "correct": "Correct Answers",
+    "submitted": "Submitted",
+    "user": "User",
+    "questions": "Questions",
+    "explanation": "Explanation",
+    "backToHome": "Back to Home",
+    "retakeQuiz": "Retake Quiz"
   }
 } 

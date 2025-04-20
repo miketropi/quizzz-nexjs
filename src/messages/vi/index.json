@@ -133,7 +133,8 @@
     "profile": "Hồ Sơ",
     "login": "Đăng Nhập", 
     "signup": "Đăng Ký",
-    "logout": "Đăng Xuất"
+    "logout": "Đăng Xuất",
+    "contact": "Liên Hệ" 
   },
   "footer": {
     "terms": "Điều Khoản",
@@ -192,6 +193,46 @@
       "activity": "Hoạt Động",
       "profile": "Hồ Sơ",
       "settings": "Cài Đặt"
+    }
+  },
+  "submission": {
+    "backToDashboard": "Quay Lại Dashboard",
+    "score": "Điểm",
+    "correct": "Câu Trả Lời Đúng",
+    "submitted": "Đã Nộp",
+    "user": "Người Dùng",
+    "questions": "Câu Hỏi",
+    "explanation": "Giải Thích",
+    "backToHome": "Quay Lại Trang Chủ",
+    "retakeQuiz": "Thử Lại"
+  },
+  "contact": {
+    "title": "Liên Hệ",
+    "name": "Tên",
+    "email": "Email",
+    "message": "Tin Nhắn",
+    "send": "Gửi",
+    "phone": "Số Điện Thoại",
+    "subject": "Chủ Đề",
+    "address": "Địa Chỉ",
+    "subtitle": "Liên Hệ Với Chúng Tôi",
+    "info": "Thông Tin Liên Hệ",
+    "followUs": "Theo Dõi Chúng Tôi",
+    "getInTouch": "Liên Hệ Với Chúng Tôi",
+    "messagePlaceholder": "Nhập tin nhắn của bạn ở đây...",
+    "form": {
+      "name": "Tên",
+      "email": "Email",
+      "subject": "Chủ Đề",
+      "message": "Tin Nhắn",
+      "send": "Gửi"
+    },
+    "faq": {
+      "title": "Câu Hỏi Thường Gặp",
+      "subtitle": "Câu Hỏi Thường Gặp",
+      "question": "Câu Hỏi",
+      "answer": "Câu Trả Lời",
+      "readMore": "Đọc Thêm"
     }
   }
 } 

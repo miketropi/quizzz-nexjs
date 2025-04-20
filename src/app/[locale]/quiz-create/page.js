@@ -9,10 +9,11 @@ import QuizReview from '@/components/QuizReview';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useModal } from '@/components/Modal';
 import LoginForm from '@/components/LoginForm';
+import { useLocale } from 'next-intl';
 
 export default function QuizCreate() {
   const [isClient, setIsClient] = useState(false)
-
+  const locale = useLocale();
   const t = useTranslations('quizCreate'); 
   const router = useRouter();
   const { quiz, isGenerating, error, saveQuiz, updateQuiz } = useQuizStore();  
@@ -29,14 +30,14 @@ export default function QuizCreate() {
       console.log('quiz', quiz)
 
       // redirect to dashboard
-      router.push(`/${locale}/dashboard`);
+      router.push(`/${locale}/dashboard`); 
     } else {
       // redirect to login
       const currentUrl = window.location.href;
       modal.open({
         title: 'Login',
         content: <LoginForm redirectUrlAfterLogin={currentUrl} />,
-        size: 'md',
+        size: 'md', 
         closeOnClickOutside: true,
         showCloseButton: false,
       })

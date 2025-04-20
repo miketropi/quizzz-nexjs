@@ -60,6 +60,16 @@ export default function Header() {
             <li><Link href={`/${locale}/about`} className="text-sm hover:text-blue-600 transition-colors">{t('nav.about')}</Link></li>
             {/* <li><Link href={`/${locale}/quizzes`} className="text-sm hover:text-blue-600 transition-colors">{t('nav.quizzes')}</Link></li> */}
             
+            <li>
+              <Link 
+                href={`/${locale}/contact`} 
+                className="text-sm hover:text-blue-600 transition-colors"
+              >
+                {t('nav.contact') || 'Contact'}
+              </Link>
+            </li>
+
+            {/* User Authentication */}
             {!loading && (
               <>
                 {user ? (

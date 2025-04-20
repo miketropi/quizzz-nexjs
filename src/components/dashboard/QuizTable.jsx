@@ -178,7 +178,7 @@ export default function QuizTable() {
                 </td>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900 align-top">
                   <div className="flex flex-col">
-                    <span className=" max-w-[200px] mb-2 font-bold">{quiz.title}</span>
+                    <span className=" max-w-[200px] mb-2 font-bold">{quiz.title} - {quiz.id}</span>
                     <div className="flex items-center gap-2">
                       <Link 
                         href={`/${locale}/exam/${quiz.id}`}

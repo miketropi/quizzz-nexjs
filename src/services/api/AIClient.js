@@ -189,6 +189,7 @@ Follow these guidelines:
     - **Number of Questions**: ${ questionCount >= 25 ? 25 : questionCount }.
     - **Language Detection**: ${ language }.
     - **Difficulty Level**: ${ difficulty }.
+    - **Randomize the right answer**: Randomize the right answer in the options.
     - **Response Format**: Format the quiz as a JSON object with the following structure:
     {
       "title": "Quiz title here", // Quiz title here and use language of the quiz
@@ -198,7 +199,7 @@ Follow these guidelines:
           "id": "0e66df44", // Unique random ID for the question
           "question": "Question text",
           "options": { "A": "Option A", "B": "Option B", "C": "Option C", "D": "Option D" },
-          "correctAnswer": "A", // Key of the correct answer in the options object
+          "correctAnswer": "A", // Key of the correct answer in the options object, randomize the correct answer
           "explanation": "Explanation of the correct answer"
         } 
       ]
