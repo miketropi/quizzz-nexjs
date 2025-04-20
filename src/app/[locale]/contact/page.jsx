@@ -47,41 +47,37 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      toast.success("Your message has been sent successfully! We'll get back to you soon.");
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-      setIsSubmitting(false);
-    }, 1500);
-    
     // In a real application, you would send the form data to your backend:
-    // try {
-    //   const response = await fetch('/api/contact', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(formData),
-    //   });
-    //   const data = await response.json();
-    //   
-    //   if (response.ok) {
-    //     toast.success("Your message has been sent successfully!");
-    //     setFormData({ name: '', email: '', subject: '', message: '' });
-    //   } else {
-    //     toast.error(data.message || "Something went wrong. Please try again.");
-    //   }
-    // } catch (error) {
-    //   toast.error("Failed to send message. Please try again later.");
-    //   console.error(error);
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+    try {
+
+      const mailData = {
+        from: formData.email,
+        subject: 'New message from contact form',
+        text: `Name: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\nMessage: ${formData.message}`,
+        html: `<p>Name: ${formData.name}</p><p>Email: ${formData.email}</p><p>Subject: ${formData.subject}</p><p>Message: ${formData.message}</p>`,
+      };
+
+      const response = await fetch('/api/v1/sendMail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(mailData),
+      });
+      const data = await response.json();
+      
+      if (response.ok) {
+        toast.success("Your message has been sent successfully!");
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        toast.error(data.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Failed to send message. Please try again later.");
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [

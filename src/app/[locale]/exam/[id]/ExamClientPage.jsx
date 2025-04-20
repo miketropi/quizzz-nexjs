@@ -5,10 +5,11 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { CheckCircle2, Timer, AlertTriangle, ArrowLeft, ArrowRight, Flag, CheckCircle } from 'lucide-react';
 import { useQuizStore } from '@/store';
-
-export default function ExamClientPage({ quizData, id }) {
+import { useAuthStore } from '@/store';
+export default function ExamClientPage({ quizData, id, author }) {
   const t = useTranslations('exam');
   const router = useRouter();
+  const { user } = useAuthStore();
   
   // Get actions and state from zustand store
   const { 
@@ -182,6 +183,38 @@ export default function ExamClientPage({ quizData, id }) {
     setCurrentQuestionIndex(index);
   };
 
+  // call api to send email to author when exam is completed
+  const sendEmailToAuthor = async (resultData) => {
+    const to = author.email;
+    const subject = `New completion: "${quiz.title}" quiz`;
+    const bodyText = `Hello,
+    
+Someone has just completed your quiz "${quiz.title}".
+
+User: ${user.email || 'Anonymous user'}
+Date: ${new Date().toLocaleString()}
+Score: ${resultData.score}%
+Correct Answers: ${resultData.correctAnswers}/${resultData.totalQuestions}
+
+This is an automated notification from the quiz platform.`;
+
+    const bodyHtml = `
+    <p>Hello,</p>
+    <p>Someone has just completed your quiz "${quiz.title}".</p>
+    <p>User: ${user.email || 'Anonymous user'}</p>
+    <p>Date: ${new Date().toLocaleString()}</p>
+    <p>Score: ${resultData.score}%</p>
+    <p>Correct Answers: ${resultData.correctAnswers}/${resultData.totalQuestions}</p>
+    <p>This is an automated notification from the quiz platform.</p>
+    `;
+    const response = await fetch('/api/v1/sendMail', {
+      method: 'POST',
+      body: JSON.stringify({ to, subject, text: bodyText, html: bodyHtml }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   // Submit the exam
   const submitExam = () => {
     if (examCompleted) return;
@@ -212,6 +245,7 @@ export default function ExamClientPage({ quizData, id }) {
     
     // Save to store immediately
     completeExam(id, resultData);
+    sendEmailToAuthor(resultData);
   };
 
   // Ask for confirmation before leaving the page

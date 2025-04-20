@@ -65,13 +65,23 @@ export default async function ExamServerPage(context) {
     }
     
     const quizData = await getQuizData(id);
+    // console.log(quizData);
 
+    // get author info from quizData.userId
+    const authorInfo = await admin.auth().getUser(quizData.userId);
+    
     // check status of quiz not is public
     if (quizData.status !== 'public') {
       notFound();
     }
 
-    return <ExamClientPage quizData={quizData} id={id} />
+    return <ExamClientPage quizData={quizData} id={id} author={{
+      name: authorInfo.displayName,
+      email: authorInfo.email,
+      photoURL: authorInfo.photoURL,
+      uid: authorInfo.uid,
+      createdAt: authorInfo.metadata.createdAt,
+    }} />
   } catch (error) {
     console.error('Error fetching quiz:', error);
     throw error;

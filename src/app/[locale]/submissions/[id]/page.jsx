@@ -38,7 +38,7 @@ export default async function SubmissionPage({ params }) {
       notFound();
     }
 
-    console.log('submission', submission);
+    // console.log('submission', submission);
 
     return <>
       <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -157,12 +157,12 @@ export default async function SubmissionPage({ params }) {
             {t('submission.backToHome', 'Back to Home')}
           </a>
           
-          <a 
-            href={`/exam/${submission.quizId}`} 
+          <Link 
+            href={`/${locale}/exam/${submission.quizId}`} 
             className="inline-flex items-center justify-center px-5 py-2 border border-blue-600 rounded-md shadow-sm text-sm font-medium text-blue-600 bg-white hover:bg-blue-50"
           >
             {t('submission.retakeQuiz', 'Retake Quiz')}
-          </a>
+          </Link>
         </div>
       </div>
     </>
@@ -173,9 +173,9 @@ export default async function SubmissionPage({ params }) {
       <div className="container mx-auto px-4 py-8 text-center">
         <h1 className="text-2xl font-bold text-red-600 mb-4">{t('submission.error', 'Error')}</h1>
         <p className="text-gray-600 mb-8">{t('submission.errorMessage', 'There was an error fetching the submission details.')}</p>
-        <a href="/" className="inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+        <Link href="/" className="inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
           {t('submission.backToHome', 'Back to Home')}
-        </a>
+        </Link>
       </div>
     );
   }
