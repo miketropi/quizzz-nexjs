@@ -15,6 +15,13 @@ export function generateStaticParams() {
 export const metadata = {
   title: "Quizzz - AI-Powered Quiz Generation",
   description: "Generate engaging quizzes using AI based on your topic or concept",
+  openGraph: {
+    title: "Quizzz - AI-Powered Quiz Generation",
+    description: "Generate engaging quizzes using AI based on your topic or concept",
+    images: [
+      { url: "https://quizzz-nexjs.fly.dev/images/quizzz-gen-ai.jpg" },
+    ],
+  },
 };
 
 export default async function LocaleLayout({ children, params }) {
