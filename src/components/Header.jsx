@@ -68,6 +68,15 @@ export default function Header() {
                 {t('nav.contact') || 'Contact'}
               </Link>
             </li>
+            
+            <li>
+              <Link 
+                href={`/${locale}/changelog`} 
+                className="text-sm hover:text-blue-600 transition-colors"
+              >
+                {t('nav.changelog') || 'Changelog'}
+              </Link>
+            </li>
 
             {/* User Authentication */}
             {!loading && (
@@ -150,6 +159,8 @@ export default function Header() {
               <li><Link href={`/${locale}`} className="block text-sm py-2 hover:text-blue-600 transition-colors" onClick={() => setMobileMenuOpen(false)}>{t('nav.home')}</Link></li>
               <li><Link href={`/${locale}/about`} className="block text-sm py-2 hover:text-blue-600 transition-colors" onClick={() => setMobileMenuOpen(false)}>{t('nav.about')}</Link></li>
               <li><Link href={`/${locale}/quizzes`} className="block text-sm py-2 hover:text-blue-600 transition-colors" onClick={() => setMobileMenuOpen(false)}>{t('nav.quizzes')}</Link></li>
+              <li><Link href={`/${locale}/contact`} className="block text-sm py-2 hover:text-blue-600 transition-colors" onClick={() => setMobileMenuOpen(false)}>{t('nav.contact') || 'Contact'}</Link></li>
+              <li><Link href={`/${locale}/changelog`} className="block text-sm py-2 hover:text-blue-600 transition-colors" onClick={() => setMobileMenuOpen(false)}>{t('nav.changelog') || 'Changelog'}</Link></li>
               
               {!loading && (
                 <>

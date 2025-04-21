@@ -12,7 +12,7 @@
   },
   "quizForm": {
     "title": "Tạo Trắc Nghiệm",
-    "placeholder": "Nhập chủ đề cho bài trắc nghiệm của bạn (ví dụ: 'Hệ Mặt Trời', 'Chiến Tranh Thế Giới Thứ II')",
+    "placeholder": "Nhập chủ đề cho bài trắc nghiệm của bạn (ví dụ: 'Hệ Mặt Trời', 'Chến thắng Điện Biên Phủ 1954')",
     "generating": "Đang tạo trắc nghiệm...",
     "quizGeneratedSuccess": "Trắc Nghiệm Đã Được Tạo Thành Công",
     "help": "Trợ Giúp", 
@@ -134,7 +134,8 @@
     "login": "Đăng Nhập", 
     "signup": "Đăng Ký",
     "logout": "Đăng Xuất",
-    "contact": "Liên Hệ" 
+    "contact": "Liên Hệ",
+    "changelog": "Lịch Sử Cập Nhật"
   },
   "footer": {
     "terms": "Điều Khoản",
@@ -236,5 +237,11 @@
       "answer": "Câu Trả Lời",
       "readMore": "Đọc Thêm"
     }
+  },
+  "Changelog": {
+    "title": "Lịch Sử Cập Nhật",
+    "subtitle": "Theo dõi tiến trình và xem những tính năng mới của Quizzz Gen AI",
+    "stayUpdated": "Luôn Cập Nhật",
+    "updateInfo": "Tụi mình thường xuyên cập nhật Quizzz Gen AI với các tính năng mới, cải tiến và sửa lỗi. Hãy quay lại đây để xem những điều mới!"
   }
 } 

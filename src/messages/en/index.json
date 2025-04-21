@@ -133,7 +133,8 @@
     "login": "Login",
     "signup": "Sign Up",
     "logout": "Logout",
-    "contact": "Contact"
+    "contact": "Contact",
+    "changelog": "Changelog"
   },
   "footer": {
     "terms": "Terms",
@@ -204,5 +205,11 @@
     "explanation": "Explanation",
     "backToHome": "Back to Home",
     "retakeQuiz": "Retake Quiz"
+  },
+  "Changelog": {
+    "title": "Changelog",
+    "subtitle": "Track our progress and see what's new in Quizzz Gen AI",
+    "stayUpdated": "Stay Updated",
+    "updateInfo": "We regularly update Quizzz Gen AI with new features, improvements, and bug fixes. Check back here to see what's new!"
   }
 } 

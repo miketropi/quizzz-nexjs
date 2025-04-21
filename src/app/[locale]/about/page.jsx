@@ -25,24 +25,24 @@ export default function AboutPage() {
   const teamMembers = [
     {
       id: 1,
-      name: 'Devfun',
+      name: 'Devfun Watcher',
       role: 'Founder & Lead Developer',
       bio: 'Passionate developer dedicated to building tools that empower learning communities worldwide.',
-      image: '/images/team/alex.jpg' // Replace with actual image path
+      image: '/images/team/devfun-watcher-avatar.webp' // Replace with actual image path
     },
     {
       id: 2,
       name: 'Artificial Intelligence',
       role: 'UX Designer',
       bio: 'Focused on creating intuitive, accessible interfaces that make learning enjoyable for everyone.',
-      image: '/images/team/maya.jpg' // Replace with actual image path
+      // image: '/images/team/maya.jpg' // Replace with actual image path
     },
     {
       id: 3,
       name: 'Artificial Intelligence',
       role: 'AI Specialist',
       bio: 'Working to ensure our AI tools are both powerful and responsible in educational contexts.',
-      image: '/images/team/jamal.jpg' // Replace with actual image path
+      // image: '/images/team/jamal.jpg' // Replace with actual image path
     }
   ];
   
@@ -143,15 +143,20 @@ export default function AboutPage() {
                 className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all text-center"
               >
                 <div className="mb-4 mx-auto w-24 h-24 relative">
+                  {member.image && (
+                    <img 
+                      src={member.image} 
+                      alt={member.name} 
+                      className="rounded-full object-cover w-full h-full"
+                    />
+                  )}
+
                   {/* Fallback icon if image isn't available */}
-                  <UserCircle className="w-full h-full text-gray-300" />
+                  {!member.image && (
+                    <UserCircle className="w-full h-full text-gray-300" />
+                  )}
                   
-                  {/* Uncomment when images are available */}
-                  {/* <img 
-                    src={member.image} 
-                    alt={member.name} 
-                    className="rounded-full object-cover w-full h-full"
-                  /> */}
+
                 </div>
                 <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
                 <p className="text-blue-600 mb-3">{member.role}</p>
@@ -174,7 +179,7 @@ export default function AboutPage() {
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-1/3 mb-4 md:mb-0">
                   <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                    January 2025
+                    April 2025
                   </span>
                 </div>
                 <div className="md:w-2/3">
@@ -189,7 +194,7 @@ export default function AboutPage() {
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-1/3 mb-4 md:mb-0">
                   <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
-                    March 2025
+                    April 2025
                   </span>
                 </div>
                 <div className="md:w-2/3">
@@ -219,7 +224,7 @@ export default function AboutPage() {
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-1/3 mb-4 md:mb-0">
                   <span className="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                    April 12, 2025
+                    April 20, 2025
                   </span>
                 </div>
                 <div className="md:w-2/3">

@@ -34,7 +34,8 @@
     "home": "Inicio",
     "about": "Acerca de",
     "quizzes": "Cuestionarios",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "changelog": "Registro de Cambios"
   },
   "dashboard": {
     "title": "Panel de Control",
@@ -68,5 +69,11 @@
     "incorrect": "Incorrecto",
     "correctAnswer": "Respuesta Correcta",
     "returnToDashboard": "Volver al Panel"
+  },
+  "Changelog": {
+    "title": "Registro de Cambios",
+    "subtitle": "Sigue nuestro progreso y ve las novedades en Quizzz Gen AI",
+    "stayUpdated": "Mantente Actualizado",
+    "updateInfo": "Actualizamos regularmente Quizzz Gen AI con nuevas funciones, mejoras y correcciones de errores. ¡Vuelve aquí para ver las novedades!"
   }
 } 
