@@ -19,7 +19,7 @@ class QuizService {
    * @returns {Promise<Array>} - Array of quiz documents
    */
   async getQuizzes(options = {}) {
-    const { userId, category, limit, orderBy = 'createdAt', orderDirection = 'desc' } = options;
+    const { userId, category, limit, page, orderBy = 'createdAt', orderDirection = 'desc' } = options;
     
     const filters = [];
     
@@ -31,9 +31,12 @@ class QuizService {
       filters.push({ field: 'category', operator: '==', value: category });
     }
     
+    console.log('_____getQuizzes_____', [page, limit]);
+
     return this.api.query(filters, {
       orderByFields: [{ field: orderBy, direction: orderDirection }],
-      limitCount: limit
+      limitCount: limit,
+      startAfter: (page - 1) * limit, 
     });
   }
 
@@ -60,10 +63,36 @@ class QuizService {
    * Get quizzes created by a specific user
    * @param {string} userId - User ID
    * @param {number} [limit] - Maximum number of quizzes to retrieve
+   * @param {Object} [lastQuiz] - Last quiz document for pagination
    * @returns {Promise<Array>} - Array of quiz documents
    */
-  async getQuizzesByUser(userId, limit) {
-    return this.getQuizzes({ userId, limit });
+  async getQuizzesByUser(userId, limit, lastQuiz = null) {
+    const filters = [
+      { field: 'userId', operator: '==', value: userId }
+    ];
+    
+    let queryOptions = {
+      orderByFields: [{ field: 'createdAt', direction: 'desc' }],
+      limitCount: limit
+    };
+    
+    // If we have a lastQuiz for pagination, use it as a cursor
+    if (lastQuiz) {
+      const lastQuizData = await this.getQuizById(lastQuiz.id);
+      queryOptions.startAfter = lastQuizData.createdAt;
+    }
+
+    const quizzes = await this.api.query(
+      filters, 
+      queryOptions
+    );
+    
+    return { 
+      quizzes,
+      pagination: {
+        hasMore: quizzes.length === limit
+      } 
+    };
   }
 
   /**

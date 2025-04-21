@@ -31,6 +31,8 @@ export default function DashboardPage() {
           
           // Fetch user quizzes
           const quizzes = await quizService.getQuizzesByUser(user.uid);
+          // console.log('___quizzes', quizzes);
+
           setUserQuizzes(quizzes);
           
           // Fetch user profile

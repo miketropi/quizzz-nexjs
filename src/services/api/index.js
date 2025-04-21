@@ -22,7 +22,7 @@ export const quizApi = new QuizApi();
 
 // Create a unified AI client with default provider and pass API instances
 export const aiClient = new AIClient(
-  process.env.NEXT_PUBLIC_DEEPSPEED_API_KEY ? 'deepseek' : 'openai',
+  process.env.NEXT_PUBLIC_DEFAULT_API_AI, // openai or deepseek
   { openaiApi, deepseekApi }
 );
 

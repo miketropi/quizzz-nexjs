@@ -39,10 +39,14 @@ export default class AIClient {
       { role: 'user', content: prompt }
     ];
     
+    let __model = this.provider === 'openai' 
+      ? 'gpt-4o-mini' 
+      : 'deepseek-chat';
+
     try {
-      const response = await this.api.createChatCompletion({
+      const response = await this.api.createChatCompletion({ 
         messages,
-        model: options.model,
+        model: options.model || __model,
         temperature: options.temperature,
         max_tokens: options.maxTokens,
         ...options.additionalParams

@@ -11,7 +11,8 @@ import {
   orderBy,
   limit,
   startAfter,
-  serverTimestamp
+  serverTimestamp,
+  getCountFromServer
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 
@@ -129,7 +130,8 @@ export default class FirestoreApi {
     const {
       collectionPath = this.collectionName,
       orderByFields = [],
-      limitCount
+      limitCount,
+      ...rest
     } = options;
     
     let q = query(this.getCollectionRef(collectionPath));
@@ -143,12 +145,18 @@ export default class FirestoreApi {
     orderByFields.forEach(({ field, direction = 'asc' }) => {
       q = query(q, orderBy(field, direction));
     });
+
+    if (rest.startAfter) {
+      // console.log('_____startAfter_____', rest.startAfter);
+      q = query(q, startAfter(rest.startAfter));
+    } 
     
     // Apply limit if needed
     if (limitCount) {
+      // console.log('limitCount', limitCount);
       q = query(q, limit(limitCount));
     }
-    
+    // console.log('_____q_____', q);
     const querySnapshot = await getDocs(q);
     
     return querySnapshot.docs.map(doc => ({
@@ -236,6 +244,13 @@ export default class FirestoreApi {
   async getDocByRef(ref) {
     const docSnap = await getDoc(ref);
     return docSnap.data();
+  }
+
+  // get count of documents
+  async getCount(collectionPath = this.collectionName) {
+    const ref = collection(db, collectionPath);
+    const snapshot = await getCountFromServer(ref); 
+    return snapshot.data().count;
   }
 } 
 

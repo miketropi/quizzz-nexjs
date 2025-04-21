@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { Play, Trash, Edit } from 'lucide-react';
 import { useConfirm } from '@/components/Confirm';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import quizService from '@/services/quizService';
 import { useAuthStore } from '@/store';
 
@@ -15,18 +15,71 @@ export default function QuizTable() {
   const confirm = useConfirm();
   const [selectedQuizzes, setSelectedQuizzes] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
-  
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [limit, setLimit] = useState(25);
+  const [lastQuiz, setLastQuiz] = useState(null);
+  const loader = useRef(null);
+
   // fetch data quiz by user id
-  const fetchQuizzes = async () => {
-    const quizzes = await quizService.getQuizzesByUser(user.uid);
-    setQuizzes(quizzes);
+  const fetchQuizzes = async (loadMore = false) => {
+    if (isLoading) return;
+    
+    setIsLoading(true);
+    try {
+      const res = await quizService.getQuizzesByUser(
+        user.uid, 
+        limit, 
+        loadMore && lastQuiz ? lastQuiz : null
+      );
+      
+      if (loadMore) {
+        setQuizzes(prev => [...prev, ...res.quizzes]);
+      } else {
+        setQuizzes(res.quizzes);
+      }
+      
+      if (res.quizzes.length > 0) {
+        setLastQuiz(res.quizzes[res.quizzes.length - 1]);
+      }
+      
+      setHasMore(res.pagination.hasMore);
+    } catch (error) {
+      console.error('Error fetching quizzes:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  // Handle intersection with the loading element
+  const handleObserver = useCallback((entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && hasMore && !isLoading) {
+      fetchQuizzes(true);
+    }
+  }, [hasMore, isLoading]);
+
+  useEffect(() => {
+    const option = {
+      root: null,
+      rootMargin: '20px',
+      threshold: 0,
+    };
+    
+    const observer = new IntersectionObserver(handleObserver, option);
+    
+    if (loader.current) observer.observe(loader.current);
+    
+    return () => {
+      if (loader.current) observer.unobserve(loader.current);
+    };
+  }, [handleObserver]);
 
   useEffect(() => {
     fetchQuizzes();
   }, []);
 
-  if (quizzes.length === 0) {
+  if (quizzes.length === 0 && !isLoading) { 
     return null;
   }
 
@@ -178,7 +231,9 @@ export default function QuizTable() {
                 </td>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900 align-top">
                   <div className="flex flex-col">
-                    <span className=" max-w-[200px] mb-2 font-bold">{quiz.title} - {quiz.id}</span>
+                    <span className=" max-w-[200px] mb-2 font-bold">
+                      {quiz.title}
+                    </span>
                     <div className="flex items-center gap-2">
                       <Link 
                         href={`/${locale}/exam/${quiz.id}`}
@@ -237,6 +292,16 @@ export default function QuizTable() {
             ))}
           </tbody>
         </table>
+        
+        {/* Loading indicator and intersection observer target */}
+        <div ref={loader} className="flex justify-center p-4">
+          {isLoading && <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>}
+          {!hasMore && quizzes.length > 0 && (
+            <p className="text-sm text-gray-500">
+              {t('dashboard.noMoreQuizzes', 'No more quizzes to load')}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

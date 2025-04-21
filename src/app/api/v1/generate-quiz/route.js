@@ -11,7 +11,10 @@ export async function POST(request) {
   try {
     // Parse the request body
     const body = await request.json();
-    const { prompt, model = 'deepseek-chat', options = {} } = body;
+    const { 
+      prompt, 
+      // model = 'deepseek-chat', 
+      options = {} } = body;
     
     // Validate the request
     if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
@@ -23,7 +26,7 @@ export async function POST(request) {
     
     // Generate the quiz using the AI client
     const quiz = await aiClient.generateQuiz(prompt, {
-      model,
+      // model,
       response_format: {
         type: "json_object"
       },
