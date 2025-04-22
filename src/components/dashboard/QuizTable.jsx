@@ -2,13 +2,15 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
-import { Play, Trash, Edit } from 'lucide-react';
+import { Play, Trash, Edit, FileCheck, Eye, Loader2 } from 'lucide-react';
 import { useConfirm } from '@/components/Confirm';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import quizService from '@/services/quizService';
 import { useAuthStore } from '@/store';
+import submittedService from '@/services/submittedService';
+import { useModal } from '@/components/Modal';
 
-export default function QuizTable() {
+export default function QuizTable() { 
   const { user } = useAuthStore();
   const t = useTranslations();
   const locale = useLocale();
@@ -231,7 +233,7 @@ export default function QuizTable() {
                 </td>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900 align-top">
                   <div className="flex flex-col">
-                    <span className=" max-w-[200px] mb-2 font-bold">
+                    <span className=" max-w-[250px] mb-2 font-bold">
                       {quiz.title}
                     </span>
                     <div className="flex items-center gap-2">
@@ -241,9 +243,10 @@ export default function QuizTable() {
                         aria-label={t('dashboard.takeExam', 'Take Exam')}
                         title={t('dashboard.takeExam', 'Take Exam')}
                       >
-                        <span className="text-xs">{t('dashboard.takeExam', 'Take Exam')}</span>
+                        <span className="text-xs whitespace-nowrap">{t('dashboard.takeExam', 'Take Exam')}</span>
                         <Play className="w-4 h-4" />
                       </Link>
+                      <SubmissionQuizModal quizId={quiz.id} />
                       <Link 
                         href={`/${locale}/quiz-edit/${quiz.id}`}
                         className="p-1.5 rounded-full bg-amber-50 text-amber-600 hover:bg-amber-100 transition-colors duration-200 flex items-center justify-center"
@@ -306,3 +309,140 @@ export default function QuizTable() {
     </div>
   );
 } 
+
+const SubmissionQuizModal = ({ quizId }) => {
+  // get submission quiz by quiz id
+  const [submissions, setSubmissions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const modal = useModal();
+  const locale = useLocale();
+
+  useEffect(() => {
+    const fetchSubmissions = async () => {
+      setIsLoading(true);
+      const res = await submittedService.getSubmissions({ quizId });
+      // console.log(res.length);
+      // loop res and get user info from submissions
+      // const submissionsWithUser = await Promise.all(res.map(async (submission) => {
+      //   const user = await fetch(`/api/v1/user/${submission.userId}`).then(res => res.json());
+      //   return { ...submission, userInfo: user };
+      // }));
+      // console.log(submissionsWithUser);
+      setSubmissions(res);
+      setIsLoading(false);
+
+    }
+
+    fetchSubmissions();
+  }, [quizId]);
+
+  const onOpenModal = () => {
+    modal.open({
+      title: 'Submissions',
+      size: 'full',
+      content: <div className="max-h-[70vh] overflow-y-auto">
+        <table className="min-w-full divide-y divide-gray-200 border border-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correct</th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {submissions.map((submission) => (
+              <tr key={submission.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <UserInfo userId={submission.userId} />
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{submission.result.score}%</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{submission.result.correctAnswers}/{submission.result.totalQuestions}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {new Date(submission.submittedAt).toLocaleString()}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button 
+                    onClick={() => window.open(`/${locale}/submissions/${submission.id}`, '_blank')}
+                    className="p-1.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors duration-200 flex items-center justify-center"
+                  >
+                    <Eye className="w-4 h-4" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    });
+  }
+
+  return (
+    <>
+      {
+        !isLoading && submissions?.length > 0 && (
+          <button 
+            className="p-1.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors duration-200 flex items-center justify-center gap-1 border border-blue-200 cursor-pointer" 
+            onClick={onOpenModal}
+          >
+            <span className="text-xs whitespace-nowrap">{ submissions?.length } { `submit` }</span>
+            <FileCheck className="w-4 h-4" />
+          </button>
+        ) 
+      }
+      
+    </>
+  );
+}
+
+const UserInfo = ({ userId }) => {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch(`/api/v1/user/${userId}`).then(res => res.json());
+      console.log(res);
+      setUser(res);
+      setIsLoading(false);
+    }
+
+    fetchUser();
+  }, [userId]);
+
+  return (
+    <div>
+      {
+        isLoading ? (
+          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+            {/** max string 5 character and add ... */}
+            <span className="text-sm font-medium text-gray-900">{ userId.substring(0, 5) }...</span>
+          </div>
+        ) : (
+          <>
+            {/** avata and user email */}
+            <div className="flex items-center">
+              {user.photoURL ? (
+                <img src={user.photoURL} alt={user.displayName || user.email} className="w-8 h-8 rounded-full mr-2" />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+                  {(user.displayName || user.email || '?')[0].toUpperCase()}
+                </div>
+              )}
+              <div className="text-sm font-medium text-gray-900">
+                {user.displayName || user.email}
+              </div>
+            </div>
+          </>
+        )
+      }
+    </div>
+  )
+}

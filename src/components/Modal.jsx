@@ -197,7 +197,7 @@ const ModalContainer = forwardRef((_, ref) => {
           
           <motion.div 
             ref={modalRef}
-            className={`relative w-full ${sizeClasses[options.size]} rounded-lg bg-white shadow-xl`}
+            className={`relative w-full ${sizeClasses[options.size]} rounded-lg bg-white shadow-xl border border-gray-200`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
