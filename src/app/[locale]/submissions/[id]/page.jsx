@@ -7,7 +7,6 @@ import Link from 'next/link';
 // Server-side rendering
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  
   try {
     const submission = await submittedService.getSubmissionById(id);
     if (!submission) {
@@ -15,6 +14,8 @@ export async function generateMetadata({ params }) {
         title: 'Submission Not Found',
       };
     }
+
+    // console.log('submission', submission);
 
     return {
       title: `Quiz Result: ${submission.result?.quizData?.title || 'Quiz'}`,
@@ -31,7 +32,9 @@ export async function generateMetadata({ params }) {
 
 export default async function SubmissionPage({ params }) {
   const { id, locale } = await params;
-  const t = await getTranslations();
+  const t = await getTranslations({
+    locale,
+  });
   try {
     const submission = await submittedService.getSubmissionById(id);
     if (!submission) {
@@ -39,6 +42,15 @@ export default async function SubmissionPage({ params }) {
     }
 
     // console.log('submission', submission);
+    // get user info
+    let rootUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const userInfo = await fetch(`${ rootUrl }/api/v1/user/${submission.userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json());
+    // console.log('user', userInfo);
 
     return <>
       <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -85,9 +97,30 @@ export default async function SubmissionPage({ params }) {
             <div className="bg-orange-50 p-4 rounded-lg flex flex-col items-center">
               <User className="text-orange-600 mb-2" size={24} />
               <p className="text-sm text-gray-500">{t('submission.user', 'User')}</p>
-              <p className="text-xl font-bold text-orange-600 truncate max-w-full">
-                {submission.userId?.substring(0, 8) || 'Anonymous'}
-              </p>
+              <div className="text-xl font-bold text-orange-600 truncate max-w-full">
+                {/* {submission.userId?.substring(0, 8) || 'Anonymous'} */}
+                {/** show avatar & user displayName or email */}
+                <div className="flex items-center space-x-2">
+                  {
+                    userInfo.photoURL? (
+                      <img
+                        src={userInfo.photoURL}
+                        alt={`avatar`}
+                        className="w-6 h-6 rounded-full"
+                      />
+                    ) : (
+                      <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center">
+                        <span className="text-sm text-gray-500">
+                          {userInfo.displayName?.charAt(0) || userInfo.email?.charAt(0)}
+                        </span>
+                      </div>
+                    )
+                  }
+                  <span className="truncate" title={ userInfo.email }>
+                    {userInfo.displayName || userInfo.email}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

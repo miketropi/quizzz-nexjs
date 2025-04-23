@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { useLocale } from 'next-intl'
 import { UserCircle, Code, MessageSquareHeart, Globe, Award, Coffee, Users, Heart, BarChart } from 'lucide-react';
 
 // Animation variants
@@ -20,7 +22,9 @@ const staggerContainer = {
   }
 };
 
-export default function AboutPage() {
+export default async function AboutPage(ctx) {
+  const { locale } = await ctx.params;
+
   // Team members
   const teamMembers = [
     {
@@ -281,13 +285,13 @@ export default function AboutPage() {
           <p className="max-w-2xl mx-auto mb-8 text-gray-700">
             Have ideas, questions, or want to contribute? We'd love to hear from you!
           </p>
-          <a 
-            href="mailto:community@devfun.com" 
+          <Link 
+            href={ `/${ locale }/contact` }
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
           >
             <Coffee className="mr-2 h-5 w-5" />
             Contact Us
-          </a>
+          </Link>
         </div>
       </section>
     </div>
